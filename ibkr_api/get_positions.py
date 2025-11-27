@@ -23,8 +23,11 @@ def get_positions(client: IBKRClient) -> list[dict[str, Any]]:
 
 def main() -> None:
     client = get_configured_client()
-    positions = get_positions(client)
-    print_json(positions)
+    try:
+        positions = get_positions(client)
+        print_json(positions)
+    finally:
+        client.disconnect()
 
 
 if __name__ == "__main__":

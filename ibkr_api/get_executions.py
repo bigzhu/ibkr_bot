@@ -23,8 +23,11 @@ def get_executions(client: IBKRClient) -> list[dict[str, Any]]:
 
 def main() -> None:
     client = get_configured_client()
-    executions = get_executions(client)
-    print_json(executions)
+    try:
+        executions = get_executions(client)
+        print_json(executions)
+    finally:
+        client.disconnect()
 
 
 if __name__ == "__main__":

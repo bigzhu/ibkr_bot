@@ -124,9 +124,10 @@ def main() -> None:
         )
     except Exception as exc:  # - CLI 入口统一提示
         logger.error(f"❌ 下单失败: {exc}")
-        return
-
-    print_json(result)
+    else:
+        print_json(result)
+    finally:
+        client.disconnect()
 
 
 def _print_usage() -> None:

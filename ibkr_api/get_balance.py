@@ -93,9 +93,12 @@ def display_balance_info() -> None:
     logger.info("=" * 60)
 
     client = get_configured_client()
-    summary = account_info(client)
-    breakdown = get_balance_breakdown(asset=summary.get("currency", ""))
-    print_json(_to_json_safe(breakdown))
+    try:
+        summary = account_info(client)
+        breakdown = get_balance_breakdown(asset=summary.get("currency", ""))
+        print_json(_to_json_safe(breakdown))
+    finally:
+        client.disconnect()
 
 
 def _to_json_safe(data: Any) -> Any:

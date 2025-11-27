@@ -23,8 +23,11 @@ def get_open_orders(client: IBKRClient) -> list[dict[str, Any]]:
 
 def main() -> None:
     client = get_configured_client()
-    orders = get_open_orders(client)
-    print_json(orders)
+    try:
+        orders = get_open_orders(client)
+        print_json(orders)
+    finally:
+        client.disconnect()
 
 
 if __name__ == "__main__":

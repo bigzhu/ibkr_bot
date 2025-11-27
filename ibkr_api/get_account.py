@@ -107,11 +107,11 @@ def main():
     from shared.output_utils import print_json
 
     client = get_configured_client()
-
-    account_data = account_info(client)
-
-    # 直接输出原始数据, 不做加工
-    print_json(account_data)
+    try:
+        account_data = account_info(client)
+        print_json(account_data)
+    finally:
+        client.disconnect()
 
 
 if __name__ == "__main__":
