@@ -10,7 +10,7 @@ from typing import Any
 
 if __name__ == "__main__" and __package__ is None:
     raise RuntimeError(
-        "请在项目根目录使用 `p -m binance_api.common` 运行该模块, 无需手动修改 sys.path"
+        "请在项目根目录使用 `p -m ibkr_api.common` 运行该模块, 无需手动修改 sys.path"
     )
 
 from binance.client import Client

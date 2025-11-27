@@ -13,9 +13,9 @@ if __name__ == "__main__" and __package__ is None:
 
 from loguru import logger
 
-from binance_api.get_balance import get_balance
 from database.db_config import get_db_manager
 from database.models import TradingSymbol
+from ibkr_api.get_balance import get_balance
 from shared.constants import BUY
 
 

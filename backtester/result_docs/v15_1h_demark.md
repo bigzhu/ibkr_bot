@@ -11,7 +11,7 @@
 1. 在 `order_builder/feature_flags.py` 新增 `THIRTY_MIN_DEMARK_GUARD_ENABLED` 开关, 默认关闭.
 2. 新增 `order_builder/demark_guard.py`, 提供 `ensure_thirty_min_demark_allows_buy`:
    - 开关关闭时直接返回.
-   - 通过 `demark_with_binance_api(symbol, "30m")` 获取 30m demark 信号.
+   - 通过 `demark_with_ibkr_api(symbol, "30m")` 获取 30m demark 信号.
    - 当信号方向不是 `SELL` 时抛出 `ValueError`, 阻止 BUY.
 3. 在 BUY 流程中 (数量计算前) 调用守护函数, 与现有 RSI 守护并列, 只影响 BUY.
 4. 为守护函数补充单元测试, 覆盖 SELL 放行与其他方向阻断两个分支.

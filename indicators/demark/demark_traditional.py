@@ -151,6 +151,6 @@ if __name__ == "__main__":
 
     logger.info("DeMark指标模块 - 传统方式实现")
     logger.info(
-        "使用带API的数据获取请运行: from demark.binance_demark import demark_with_binance_api"
+        "使用带API的数据获取请运行: from demark.binance_demark import demark_with_ibkr_api"
     )
     logger.info("或在代码中调用: from demark.demark_traditional import demark")

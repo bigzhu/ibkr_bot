@@ -19,12 +19,12 @@ if __name__ == "__main__":
 
     ensure_project_root_for_script(__file__)
 
-from binance_api.common import get_configured_client
-from binance_api.get_klines import klines
+from ibkr_api.common import get_configured_client
+from ibkr_api.get_klines import klines
 from indicators.atr.atr import calculate_atr, calculate_atr_percentage
 
 
-def atr_with_binance_api(
+def atr_with_ibkr_api(
     symbol: str, timeframe: str, period: int = 14
 ) -> tuple[float, float]:
     """通过币安API获取数据并计算ATR指标 - 业务封装函数
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     logger.info(f"🚀 开始计算 {symbol} {timeframe} 的ATR指标")
 
-    atr_value, atr_percentage = atr_with_binance_api(symbol, timeframe)
+    atr_value, atr_percentage = atr_with_ibkr_api(symbol, timeframe)
 
     logger.info("=" * 50)
     logger.info(f"📊 {symbol} {timeframe} ATR分析结果:")

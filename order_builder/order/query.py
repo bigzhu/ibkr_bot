@@ -3,8 +3,8 @@
 实现订单查询相关功能.
 """
 
-from binance_api.get_open_orders import get_open_orders
 from database.order_models import BinanceOpenOrder
+from ibkr_api.get_open_orders import get_open_orders
 from shared.timeframe_utils import is_timeframe_match
 
 

@@ -11,8 +11,8 @@ if __name__ == "__main__" and __package__ is None:
 
 from loguru import logger
 
-from binance_api.common import get_configured_client
-from binance_api.get_klines import klines
+from ibkr_api.common import get_configured_client
+from ibkr_api.get_klines import klines
 from indicators.supertrend.supertrend import (
     SuperTrendColor,
     calculate_supertrend_signal,
@@ -20,7 +20,7 @@ from indicators.supertrend.supertrend import (
 from shared.types import Kline
 
 
-def supertrend_with_binance_api(
+def supertrend_with_ibkr_api(
     symbol: str,
     timeframe: str,
     period: int = 10,
@@ -66,5 +66,5 @@ if __name__ == "__main__":
     sym = sys.argv[1].upper()
     tf = sys.argv[2].lower()
 
-    color, value, _ = supertrend_with_binance_api(sym, tf)
+    color, value, _ = supertrend_with_ibkr_api(sym, tf)
     logger.info("SuperTrend 信号: %s -> %s %.6f", sym, color, float(value))

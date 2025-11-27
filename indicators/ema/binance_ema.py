@@ -9,12 +9,12 @@ from decimal import Decimal
 
 from loguru import logger
 
-from binance_api.common import get_configured_client
-from binance_api.get_klines import klines
+from ibkr_api.common import get_configured_client
+from ibkr_api.get_klines import klines
 from indicators.ema.ema import calculate_ema
 
 
-def ema_with_binance_api(
+def ema_with_ibkr_api(
     symbol: str, timeframe: str, period: int = 20, price_field: str = "close"
 ) -> Decimal:
     """通过币安API获取数据并计算EMA指标 - 业务封装函数
@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     logger.info(f"🚀 开始计算 {symbol} {timeframe} 的EMA({period})[{price_field}]")
 
-    value = ema_with_binance_api(symbol, timeframe, period, price_field)
+    value = ema_with_ibkr_api(symbol, timeframe, period, price_field)
     logger.info("=" * 50)
     logger.info(
         f"📊 {symbol} {timeframe} EMA({period})[{price_field}] 结果: {value:.6f}"

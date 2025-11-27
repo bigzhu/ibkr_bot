@@ -21,8 +21,8 @@ if __name__ == "__main__":
 
     ensure_project_root_for_script(__file__)
 
-from binance_api.common import get_configured_client
-from binance_api.get_klines import klines
+from ibkr_api.common import get_configured_client
+from ibkr_api.get_klines import klines
 from shared.constants import DEMARK_USE_CLOSE_PRICE_COMPARISON
 from shared.types import Kline
 
@@ -33,7 +33,7 @@ else:
     from indicators.demark.demark import demark
 
 
-def demark_with_binance_api(
+def demark_with_ibkr_api(
     symbol: str, timeframe: str, is_all: bool = False
 ) -> tuple[str, int, bool, list[Kline]]:
     """通过币安API获取数据并计算DeMark信号 - 业务封装函数
@@ -83,7 +83,7 @@ if __name__ == "__main__":
         symbol = sys.argv[1].upper()
         timeframe = sys.argv[2].lower()
 
-        signal_type, signal_value, is_break, sequence_klines = demark_with_binance_api(
+        signal_type, signal_value, is_break, sequence_klines = demark_with_ibkr_api(
             symbol, timeframe
         )
         logger.info(f"{signal_type} {signal_value} (break={is_break})")
@@ -97,9 +97,9 @@ if __name__ == "__main__":
         logger.info("  - 输出: DeMark信号类型和值")
         logger.info("")
         logger.info("💡 使用方法:")
-        logger.info("  from demark.binance_demark import demark_with_binance_api")
+        logger.info("  from demark.binance_demark import demark_with_ibkr_api")
         logger.info(
-            "  signal_type, signal_value, is_break, klines = demark_with_binance_api('ADAUSDC', '1m')"
+            "  signal_type, signal_value, is_break, klines = demark_with_ibkr_api('ADAUSDC', '1m')"
         )
         logger.info("")
         logger.info("🔧 技术特点:")

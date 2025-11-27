@@ -70,8 +70,8 @@ async def _fetch_binance_symbol_data(symbol: str) -> dict[str, Any]:
     project_root = Path(__file__).parent.parent.parent.parent
     sys.path.insert(0, str(project_root))
 
-    from binance_api.common import get_configured_client
-    from binance_api.get_exchange_info import get_complete_symbol_data
+    from ibkr_api.common import get_configured_client
+    from ibkr_api.get_exchange_info import get_complete_symbol_data
 
     # 获取币安客户端
     client = get_configured_client()

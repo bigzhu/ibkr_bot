@@ -18,7 +18,7 @@ except ImportError:
 
 ensure_project_root_for_script(__file__)
 
-from indicators.ema.binance_ema import ema_with_binance_api
+from indicators.ema.binance_ema import ema_with_ibkr_api
 
 
 def display_usage() -> None:
@@ -53,7 +53,7 @@ def _display_result(
 
 def main() -> None:
     symbol, timeframe, period, price_field = parse_cli_args(sys.argv)
-    ema_value = ema_with_binance_api(symbol, timeframe, period, price_field)
+    ema_value = ema_with_ibkr_api(symbol, timeframe, period, price_field)
     _display_result(symbol, timeframe, period, price_field, float(ema_value))
 
 

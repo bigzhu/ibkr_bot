@@ -41,7 +41,7 @@ $5568.05
 ## 应该用 if else ; 去掉天的限制
 
 ```python
-    side_long, value_long, _ = demark_with_binance_api(symbol, "4h", True)
+    side_long, value_long, _ = demark_with_ibkr_api(symbol, "4h", True)
     if side_long == BUY:  # 长周期 BUY, 那么一直在跌, 不能买
         if value_long >= 14:  # 长到离谱, 赌反弹
             entry_amount = entry_amount * Decimal("2")

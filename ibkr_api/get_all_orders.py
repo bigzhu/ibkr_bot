@@ -1,19 +1,19 @@
 """
 获取 Binance 所有订单历史 - 纯函数实现.
 
-通过 `p -m binance_api.get_all_orders` 运行, 无需手动修改 sys.path.
+通过 `p -m ibkr_api.get_all_orders` 运行, 无需手动修改 sys.path.
 """
 
 from typing import Any
 
 if __name__ == "__main__" and __package__ is None:
     raise RuntimeError(
-        "请在项目根目录使用 `p -m binance_api.get_all_orders` 运行该模块, 无需手动修改 sys.path"
+        "请在项目根目录使用 `p -m ibkr_api.get_all_orders` 运行该模块, 无需手动修改 sys.path"
     )
 
 from loguru import logger
 
-from binance_api.common import get_configured_client
+from ibkr_api.common import get_configured_client
 from shared.output_utils import print_json
 
 

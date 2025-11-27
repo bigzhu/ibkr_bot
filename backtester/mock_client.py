@@ -36,9 +36,9 @@ class MockBinanceClient:
         self._tick = 0
         self._db_manager = get_db_manager()
         self.executed_orders: deque[dict[str, Any]] = deque()
-        self._executed_orders_by_symbol: defaultdict[str, deque[dict[str, Any]]] = (
-            defaultdict(deque)
-        )
+        self._executed_orders_by_symbol: defaultdict[
+            str, deque[dict[str, Any]]
+        ] = defaultdict(deque)
         self._history_order_limit = 100
         self._history_time_window_ms = 1 * 24 * 60 * 60 * 1000  # 1 day window
         self.pending_orders: list[

@@ -41,12 +41,12 @@ $5568.05
 ```python
     # EMA
     #
-    ema_price = ema_with_binance_api(
+    ema_price = ema_with_ibkr_api(
         symbol,
         "1d",
         144,
     )
-    side_day, _, _ = demark_with_binance_api(symbol, "1d", True)
+    side_day, _, _ = demark_with_ibkr_api(symbol, "1d", True)
     # raise ValueError(f"ema_price={ema_price} price={price}")
     if side_day == BUY:
         entry_amount = entry_amount / Decimal("2")
@@ -94,7 +94,7 @@ $4513.06
 
 ```python
     # EMA
-    ema_price = ema_with_binance_api(
+    ema_price = ema_with_ibkr_api(
         symbol,
         "1m",
         244,

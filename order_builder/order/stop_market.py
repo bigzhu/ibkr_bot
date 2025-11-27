@@ -5,9 +5,9 @@
 
 from loguru import logger
 
-from binance_api.common import get_configured_client
-from binance_api.place_order import place_order, place_order_test
 from database.order_models import BinanceOpenOrder
+from ibkr_api.common import get_configured_client
+from ibkr_api.place_order import place_order, place_order_test
 from shared.constants import ORDER_TYPE_STOP_LOSS
 from shared.timeframe_utils import timeframe_candidates
 

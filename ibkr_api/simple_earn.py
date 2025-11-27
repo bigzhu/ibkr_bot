@@ -18,7 +18,7 @@ from typing import Any, cast
 from binance.exceptions import BinanceAPIException
 from loguru import logger
 
-from binance_api.common import get_configured_client
+from ibkr_api.common import get_configured_client
 
 FLEXIBLE_QUERY_PAGE_SIZE = 100
 DECIMAL_PRECISION = Decimal("0.00000001")

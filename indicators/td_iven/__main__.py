@@ -14,7 +14,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from indicators.td_iven.binance_td_iven import td_iven_with_binance_api
+from indicators.td_iven.binance_td_iven import td_iven_with_ibkr_api
 
 
 def _display_usage() -> None:
@@ -41,7 +41,7 @@ def main() -> None:
             sys.exit(1)
         return
 
-    side, setup, countdown, _ = td_iven_with_binance_api(
+    side, setup, countdown, _ = td_iven_with_ibkr_api(
         symbol, timeframe, include_unfinished=False
     )
 

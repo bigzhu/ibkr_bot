@@ -13,7 +13,7 @@
 
 ```
 ibkr_bot/
-├── binance_api/        # IBKR 接入迁移入口(原 Binance 封装, 将逐步替换)
+├── ibkr_api/        # IBKR 接入迁移入口(原 Binance 封装, 将逐步替换)
 ├── database/           # 数据模型与表管理,CRUD
 ├── indicators/         # 技术指标(demark,ema,atr,supertrend)
 ├── order_builder/      # 下单参数构建与校验
@@ -224,7 +224,7 @@ p -m order_checker check ADAUSDC 15m BUY 9 0.5 1.2345
 
 纯函数实现的 DeMark 14 技术指标计算,包含信号检测和强度分析功能.
 
-### binance_api/ - IBKR 交易接口模块(迁移中)
+### ibkr_api/ - IBKR 交易接口模块(迁移中)
 
 承载 IBKR 行情/下单适配代码,将逐步完成从 Binance 到 IBKR 的封装替换.
 

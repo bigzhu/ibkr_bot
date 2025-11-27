@@ -4,7 +4,7 @@
     "order_builder",
     "order_filler",
     "order_checker",
-    "binance_api",
+    "ibkr_api",
     "database",
     "shared",
     "scheduler"

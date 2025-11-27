@@ -20,13 +20,13 @@ if __name__ == "__main__":
 
     ensure_project_root_for_script(__file__)
 
-from binance_api.common import get_configured_client
-from binance_api.get_klines import klines
+from ibkr_api.common import get_configured_client
+from ibkr_api.get_klines import klines
 from indicators.td_iven.td_iven import MIN_REQUIRED_KLINES, td_iven
 from shared.types import Kline
 
 
-def td_iven_with_binance_api(
+def td_iven_with_ibkr_api(
     symbol: str,
     timeframe: str,
     *,

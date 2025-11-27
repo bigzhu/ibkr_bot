@@ -12,8 +12,8 @@ if __name__ == "__main__" and __package__ is None:
 
 from loguru import logger
 
-from binance_api.cancel_order import cancel_order
-from binance_api.get_open_orders import get_open_orders
+from ibkr_api.cancel_order import cancel_order
+from ibkr_api.get_open_orders import get_open_orders
 from shared.constants import BUY, SELL
 
 

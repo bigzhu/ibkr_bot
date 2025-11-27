@@ -25,8 +25,8 @@ if __name__ == "__main__":
 
     ensure_project_root_for_script(__file__)
 
-from binance_api.get_all_orders import get_all_orders
 from database.models import BinanceFilledOrder
+from ibkr_api.get_all_orders import get_all_orders
 from order_filler.data_access import get_latest_order_id, insert_orders
 from shared.constants import BUY, SELL
 

@@ -14,9 +14,9 @@ if __name__ == "__main__" and __package__ is None:
 
 from loguru import logger
 
-from binance_api.cancel_order import cancel_order
-from binance_api.get_open_orders import get_open_orders
 from database.order_models import BinanceOpenOrder
+from ibkr_api.cancel_order import cancel_order
+from ibkr_api.get_open_orders import get_open_orders
 from order_builder.models import CancelOperationResult, CancelOrderResult
 from shared.timeframe_utils import is_timeframe_match
 

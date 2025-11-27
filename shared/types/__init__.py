@@ -33,7 +33,8 @@ class BinanceKlinesClient(Protocol):
         symbol: str,
         interval: str,
         limit: int,
-    ) -> list[list[object]]: ...
+    ) -> list[list[object]]:
+        ...
 
 
 __all__ = [

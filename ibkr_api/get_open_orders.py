@@ -1,19 +1,19 @@
 """
 获取 Binance 未成交订单 - 纯函数实现.
 
-通过 `p -m binance_api.get_open_orders` 运行, 无需手动修改 sys.path.
+通过 `p -m ibkr_api.get_open_orders` 运行, 无需手动修改 sys.path.
 """
 
 from typing import Any, cast
 
 if __name__ == "__main__" and __package__ is None:
     raise RuntimeError(
-        "请在项目根目录使用 `p -m binance_api.get_open_orders` 运行该模块, 无需手动修改 sys.path"
+        "请在项目根目录使用 `p -m ibkr_api.get_open_orders` 运行该模块, 无需手动修改 sys.path"
     )
 
 
-from binance_api.common import get_configured_client
 from database.order_models import BinanceOpenOrder
+from ibkr_api.common import get_configured_client
 
 
 def get_open_orders(symbol: str | None = None) -> list[BinanceOpenOrder]:

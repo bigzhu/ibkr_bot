@@ -28,7 +28,7 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = [
     "database",
-    "binance_api",
+    "ibkr_api",
     "demark",
     "order_builder",
     "order_checker",
@@ -49,7 +49,7 @@ addopts = "-v --tb=short"
 source = [
   "database",
   "demark",
-  "binance_api",
+  "ibkr_api",
   "order_builder",
   "order_checker",
   "order_filler",

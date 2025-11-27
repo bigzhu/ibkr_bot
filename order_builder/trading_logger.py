@@ -91,7 +91,7 @@ class TradingLogContext:
             update_trading_log(log_id=self.log_id, error=error_msg)
 
             # 业务异常: 消化异常,不继续传播
-            if isinstance(exc_val, (ValueError, BinanceAPIException)):
+            if isinstance(exc_val, ValueError | BinanceAPIException):
                 return True
 
             # 系统异常: 记录日志,让异常继续传播

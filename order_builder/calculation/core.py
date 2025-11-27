@@ -85,7 +85,7 @@ if __name__ == "__main__":
             get_symbol_info,
             get_symbol_timeframe_config,
         )
-        from indicators.demark.binance_demark import demark_with_binance_api
+        from indicators.demark.binance_demark import demark_with_ibkr_api
         from order_builder.balance_manager import get_user_balance
         from order_checker.common import (
             get_unmatched_buy_orders_by_timeframe,
@@ -102,7 +102,7 @@ if __name__ == "__main__":
             symbol_timeframe_config = get_symbol_timeframe_config(symbol, timeframe)
             symbol_info = get_symbol_info(symbol)
 
-            side, demark_value, is_break, demark_klines = demark_with_binance_api(
+            side, demark_value, is_break, demark_klines = demark_with_ibkr_api(
                 symbol, timeframe
             )
             side, demark_value = transform_demark_signal(

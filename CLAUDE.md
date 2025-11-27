@@ -153,7 +153,7 @@ ibkr_bot/
 ├── backtester/          # 回测系统
 │   ├── result_docs/     # 回测结果文档
 │   └── tests/           # 回测测试
-├── binance_api/         # IBKR API 调用(迁移中, 原 Binance 封装)
+├── ibkr_api/         # IBKR API 调用(迁移中, 原 Binance 封装)
 ├── database/            # 数据库操作和连接管理
 │   └── models/          # 数据库模型定义
 ├── data/                # 数据存储

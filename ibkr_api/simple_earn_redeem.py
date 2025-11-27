@@ -2,9 +2,9 @@
 CLI 工具: 赎回 Simple Earn 活期理财资产
 
 用法:
-    uv run python binance_api/simple_earn_redeem.py USDC 100
+    uv run python ibkr_api/simple_earn_redeem.py USDC 100
     # 或者赎回全部:
-    uv run python binance_api/simple_earn_redeem.py USDC --all
+    uv run python ibkr_api/simple_earn_redeem.py USDC --all
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from decimal import Decimal
 
 from loguru import logger
 
-from binance_api.simple_earn import redeem_flexible_asset
+from ibkr_api.simple_earn import redeem_flexible_asset
 
 
 def parse_args() -> argparse.Namespace:

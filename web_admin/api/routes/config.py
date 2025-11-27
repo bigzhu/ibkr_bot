@@ -56,7 +56,7 @@ async def get_all_configs() -> ConfigListResponse:
     response_model=ApiValidationResponse,
     dependencies=[Depends(get_current_user)],
 )
-async def validate_binance_api(request: ApiValidationRequest) -> ApiValidationResponse:
+async def validate_ibkr_api(request: ApiValidationRequest) -> ApiValidationResponse:
     """
     验证Binance API连接 - 暂时禁用
     """

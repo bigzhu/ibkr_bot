@@ -5,7 +5,7 @@ from collections.abc import Callable
 
 if __name__ == "__main__" and __package__ is None:
     raise RuntimeError(
-        "请在项目根目录使用 `p -m binance_api` 运行该入口, 无需手动修改 sys.path"
+        "请在项目根目录使用 `p -m ibkr_api` 运行该入口, 无需手动修改 sys.path"
     )
 
 from loguru import logger
@@ -24,15 +24,15 @@ def show_usage() -> None:
     logger.info("  price SYMBOL [TYPE]       - 查看价格信息")
     logger.info("  test                      - 测试API连接")
     logger.info("\n示例:")
-    logger.info("  p -m binance_api account")
-    logger.info("  p -m binance_api balance BTC")
-    logger.info("  p -m binance_api price ADAUSDC")
-    logger.info("  p -m binance_api klines ADAUSDC 1h")
+    logger.info("  p -m ibkr_api account")
+    logger.info("  p -m ibkr_api balance BTC")
+    logger.info("  p -m ibkr_api price ADAUSDC")
+    logger.info("  p -m ibkr_api klines ADAUSDC 1h")
 
 
 def test_connection() -> bool:
     """测试API连接"""
-    from binance_api.common import get_configured_client_with_config
+    from ibkr_api.common import get_configured_client_with_config
 
     logger.info("🔧 Binance API连接测试")
     logger.info("=" * 50)
@@ -98,37 +98,37 @@ def _run_test() -> None:
 
 
 def _run_account() -> None:
-    from binance_api.get_account import main as account_main
+    from ibkr_api.get_account import main as account_main
 
     account_main()
 
 
 def _run_balance() -> None:
-    from binance_api.get_balance import main as balance_main
+    from ibkr_api.get_balance import main as balance_main
 
     balance_main()
 
 
 def _run_exchange() -> None:
-    from binance_api.get_exchange_info import main as exchange_main
+    from ibkr_api.get_exchange_info import main as exchange_main
 
     exchange_main()
 
 
 def _run_klines() -> None:
-    from binance_api.get_klines import main as klines_main
+    from ibkr_api.get_klines import main as klines_main
 
     klines_main()
 
 
 def _run_orders() -> None:
-    from binance_api.get_open_orders import main as orders_main
+    from ibkr_api.get_open_orders import main as orders_main
 
     orders_main()
 
 
 def _run_price() -> None:
-    from binance_api.get_symbol_ticker import main as price_main
+    from ibkr_api.get_symbol_ticker import main as price_main
 
     price_main()
 

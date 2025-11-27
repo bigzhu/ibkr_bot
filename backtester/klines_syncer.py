@@ -13,8 +13,8 @@ if __name__ == "__main__" and __package__ is None:
 
 from loguru import logger
 
-from binance_api.common import get_configured_client
 from database.db_config import get_db_manager
+from ibkr_api.common import get_configured_client
 
 _INSERT_QUERY = """
     INSERT OR IGNORE INTO backtest_klines (

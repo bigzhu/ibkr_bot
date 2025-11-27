@@ -31,7 +31,7 @@ from database.models import (
 from database.trading_log_crud import (
     check_kline_already_processed,
 )
-from indicators.demark.binance_demark import demark_with_binance_api
+from indicators.demark.binance_demark import demark_with_ibkr_api
 from order_builder.balance_manager import get_user_balance
 from order_builder.calculation import calculate_qty
 from order_builder.opposite_order_handler import cancel_opposite_open_orders
@@ -229,7 +229,7 @@ def run_order_builder(symbol: str, timeframe: str) -> RunResult:
     """
     symbol_config, symbol_info, min_notional = _get_symbol_context(symbol, timeframe)
 
-    side, demark_value, _, signal_klines = demark_with_binance_api(symbol, timeframe)
+    side, demark_value, _, signal_klines = demark_with_ibkr_api(symbol, timeframe)
 
     if side == "NONE":
         return NoSignalResult(

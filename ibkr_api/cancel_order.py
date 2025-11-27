@@ -5,7 +5,7 @@ from typing import Any, cast
 
 if __name__ == "__main__" and __package__ is None:
     raise RuntimeError(
-        "请在项目根目录使用 `p -m binance_api.cancel_order` 运行该模块, 无需手动修改 sys.path"
+        "请在项目根目录使用 `p -m ibkr_api.cancel_order` 运行该模块, 无需手动修改 sys.path"
     )
 
 from loguru import logger
@@ -21,7 +21,7 @@ def cancel_order(symbol: str, order_id: int) -> dict[str, Any]:
     Returns:
         dict: 取消订单响应信息
     """
-    from binance_api.common import get_configured_client
+    from ibkr_api.common import get_configured_client
 
     client = get_configured_client()
 
@@ -39,7 +39,7 @@ def cancel_order_by_client_id(symbol: str, client_order_id: str) -> dict[str, An
     Returns:
         dict: 取消订单响应信息
     """
-    from binance_api.common import get_configured_client
+    from ibkr_api.common import get_configured_client
 
     client = get_configured_client()
 
@@ -56,7 +56,7 @@ def cancel_all_orders(symbol: str) -> dict[str, Any]:
     Returns:
         list: 取消订单响应信息列表
     """
-    from binance_api.common import get_configured_client
+    from ibkr_api.common import get_configured_client
 
     client = get_configured_client()
 
@@ -74,7 +74,7 @@ def get_order_status(symbol: str, order_id: int) -> dict[str, Any]:
     Returns:
         dict: 订单状态信息
     """
-    from binance_api.common import get_configured_client
+    from ibkr_api.common import get_configured_client
 
     client = get_configured_client()
 

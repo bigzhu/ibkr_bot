@@ -33,7 +33,7 @@
   - 行情: 使用回测数据帧驱动, `update_tick(i)` 同步当前 K 线; `get_klines` 将 DataFrame 转为 Binance API 数组格式.
 - 策略适配器: `backtester/strategy.py`
   - `Strategy` 基类: `init`, `next` 框架方法.
-  - `DemarkStrategy`: 在 `init` 中 monkey patch `binance_api.common.get_configured_client` 及相关指标模块引用 (含 `td_iven`), 让内部下单走 `MockBinanceClient`.
+  - `DemarkStrategy`: 在 `init` 中 monkey patch `ibkr_api.common.get_configured_client` 及相关指标模块引用 (含 `td_iven`), 让内部下单走 `MockBinanceClient`.
   - 在 `next` 中每根 K 线调用已有的 `order_builder.app.run_order_builder(symbol, timeframe)` 执行真实策略逻辑.
 - 数据加载: `backtester/data_loader.py`
   - 从 `backtest_klines` 读取指定 `symbol` 与 `timeframe` 的历史数据.

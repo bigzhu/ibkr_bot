@@ -25,7 +25,7 @@ add_project_root_to_path()
 
 from loguru import logger
 
-from indicators.demark.binance_demark import demark_with_binance_api
+from indicators.demark.binance_demark import demark_with_ibkr_api
 
 
 def _show_help() -> None:
@@ -40,7 +40,7 @@ def _show_help() -> None:
     logger.info("2. 代码中导入使用:")
     logger.info("   纯技术计算: from indicators.demark import demark")
     logger.info(
-        "   带API调用: from indicators.demark.binance_demark import demark_with_binance_api"
+        "   带API调用: from indicators.demark.binance_demark import demark_with_ibkr_api"
     )
     logger.info("")
     logger.info("输入格式:")
@@ -67,9 +67,7 @@ def main() -> None:
         # 禁用日志输出,只显示结果
         from loguru import logger
 
-        signal_type, signal_value, is_break, _ = demark_with_binance_api(
-            symbol, timeframe
-        )
+        signal_type, signal_value, is_break, _ = demark_with_ibkr_api(symbol, timeframe)
         logger.info(f"{signal_type} {signal_value} (break={is_break})")
         return
 

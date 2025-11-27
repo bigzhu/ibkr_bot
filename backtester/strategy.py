@@ -91,10 +91,10 @@ class DemarkStrategy(Strategy):
                     # Extract K-line time from signal klines
                     try:
                         from indicators.demark.binance_demark import (
-                            demark_with_binance_api,
+                            demark_with_ibkr_api,
                         )
 
-                        _, _, _, signal_klines = demark_with_binance_api(
+                        _, _, _, signal_klines = demark_with_ibkr_api(
                             self.data.name, self.timeframe
                         )
                         kline_time = int(signal_klines[-1]["open_time"])
@@ -112,7 +112,7 @@ class DemarkStrategy(Strategy):
 
     def _inject_mock_client(self) -> Callable[[], Any]:
         """Replace the global client getter so strategy code uses mock client."""
-        import binance_api.common as common_module
+        import ibkr_api.common as common_module
 
         def get_mock_client() -> Any:
             return self.mock_client
@@ -124,7 +124,7 @@ class DemarkStrategy(Strategy):
 
     def _patch_klines(self) -> None:
         """Ensure all kline helpers respect the mock client's current tick."""
-        import binance_api.get_klines as get_klines_module
+        import ibkr_api.get_klines as get_klines_module
         import indicators.atr.binance_atr as atr_binance_module
         import indicators.demark.binance_demark as demark_binance_module
         import indicators.ema.binance_ema as ema_binance_module
@@ -194,13 +194,13 @@ class DemarkStrategy(Strategy):
 
     def _patch_client_consumers(self, mock_getter: Callable[[], Any]) -> None:
         """Rebind helper modules that cached the real get_configured_client."""
-        import binance_api.cancel_order as cancel_order_module
-        import binance_api.get_account as get_account_module
-        import binance_api.get_all_orders
-        import binance_api.get_balance as get_balance_module
-        import binance_api.get_exchange_info as get_exchange_info_module
-        import binance_api.get_open_orders as get_open_orders_module
-        import binance_api.get_symbol_ticker as get_symbol_ticker_module
+        import ibkr_api.cancel_order as cancel_order_module
+        import ibkr_api.get_account as get_account_module
+        import ibkr_api.get_all_orders
+        import ibkr_api.get_balance as get_balance_module
+        import ibkr_api.get_exchange_info as get_exchange_info_module
+        import ibkr_api.get_open_orders as get_open_orders_module
+        import ibkr_api.get_symbol_ticker as get_symbol_ticker_module
         import indicators.atr.binance_atr as atr_binance_module
         import indicators.demark.binance_demark
         import indicators.ema.binance_ema as ema_binance_module
@@ -215,7 +215,7 @@ class DemarkStrategy(Strategy):
             order_checker.common,
             indicators.supertrend.binance_supertrend,
             stop_market_module,
-            binance_api.get_all_orders,
+            ibkr_api.get_all_orders,
             get_balance_module,
             get_account_module,
             get_symbol_ticker_module,

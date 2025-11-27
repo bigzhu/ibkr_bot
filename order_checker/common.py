@@ -15,11 +15,11 @@ if __name__ == "__main__" and __package__ is None:
 
 from loguru import logger
 
-from binance_api.common import get_configured_client, get_current_price
-from binance_api.get_balance import get_balance
 from database.crud import get_symbol_info
 from database.db_config import get_db_manager
 from database.models import BinanceFilledOrder
+from ibkr_api.common import get_configured_client, get_current_price
+from ibkr_api.get_balance import get_balance
 from shared.timeframe_utils import timeframe_candidates
 
 __all__ = [

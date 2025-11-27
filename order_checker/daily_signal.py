@@ -15,7 +15,7 @@ from typing import cast
 
 from loguru import logger
 
-from indicators.demark.binance_demark import demark_with_binance_api as demark_checker
+from indicators.demark.binance_demark import demark_with_ibkr_api as demark_checker
 from shared.typing import SideLiteral
 
 

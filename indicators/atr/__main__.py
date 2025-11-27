@@ -18,7 +18,7 @@ except ImportError:
 
 ensure_project_root_for_script(__file__)
 
-from indicators.atr.binance_atr import atr_with_binance_api
+from indicators.atr.binance_atr import atr_with_ibkr_api
 
 
 def display_usage() -> None:
@@ -70,7 +70,7 @@ def main() -> None:
     logger.info(f"🚀 开始计算 {symbol} {timeframe} 的ATR({period})指标")
 
     try:
-        atr_value, atr_percentage = atr_with_binance_api(symbol, timeframe, period)
+        atr_value, atr_percentage = atr_with_ibkr_api(symbol, timeframe, period)
     except Exception as exc:
         logger.error(f"❌ ATR计算失败: {exc}")
         sys.exit(1)

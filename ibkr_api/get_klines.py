@@ -4,7 +4,7 @@ from typing import cast
 
 if __name__ == "__main__" and __package__ is None:
     raise RuntimeError(
-        "请在项目根目录使用 `p -m binance_api.get_klines` 运行该模块, 无需手动修改 sys.path"
+        "请在项目根目录使用 `p -m ibkr_api.get_klines` 运行该模块, 无需手动修改 sys.path"
     )
 
 from loguru import logger
@@ -61,7 +61,7 @@ def main() -> None:
     """CLI entry to demonstrate fetching klines from the configured client."""
     import sys
 
-    from binance_api.common import get_configured_client
+    from ibkr_api.common import get_configured_client
     from shared.output_utils import print_json
 
     client = get_configured_client()

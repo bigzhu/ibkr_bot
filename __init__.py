@@ -7,7 +7,7 @@ MEXC DeMark 14 Trading Bot - 重构版本 v2.0
 
 - **database/**: 数据库操作模块
 - **demark/**: DeMark 14 指标计算模块
-- **binance_api/**: Binance API 接口模块
+- **ibkr_api/**: Binance API 接口模块
 - **order_filler/**: 币安订单撮合处理模块
 - **webadmin/**: Web 管理端 API 模块
 - **monitor/**: 监控和调度模块

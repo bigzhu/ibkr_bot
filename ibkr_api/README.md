@@ -13,7 +13,7 @@
 ## 📋 模块结构
 
 ```text
-binance_api/
+ibkr_api/
 ├── __init__.py          # 模块导出和接口定义
 ├── __main__.py          # 统一命令行入口
 ├── common.py            # 公共函数和配置管理
@@ -43,35 +43,35 @@ binance_api/
 
 ```bash
 # 查看使用帮助
-p -m binance_api
+p -m ibkr_api
 
 # 测试API连接
-p -m binance_api test
+p -m ibkr_api test
 
 # 账户信息
-p -m binance_api account
+p -m ibkr_api account
 
 # 资产余额
-p -m binance_api balance          # 所有余额
-p -m binance_api balance BTC      # 指定资产
+p -m ibkr_api balance          # 所有余额
+p -m ibkr_api balance BTC      # 指定资产
 
 # 交易所信息
-p -m binance_api exchange         # 交易所基本信息
-p -m binance_api exchange ADAUSDC # 指定交易对信息
+p -m ibkr_api exchange         # 交易所基本信息
+p -m ibkr_api exchange ADAUSDC # 指定交易对信息
 
 # 价格行情
-p -m binance_api price ADAUSDC           # 当前价格
-p -m binance_api price ADAUSDC 24hr      # 24小时统计
-p -m binance_api price ADAUSDC orderbook # 订单簿价格
+p -m ibkr_api price ADAUSDC           # 当前价格
+p -m ibkr_api price ADAUSDC 24hr      # 24小时统计
+p -m ibkr_api price ADAUSDC orderbook # 订单簿价格
 
 # K线数据
-p -m binance_api klines ADAUSDC     # 默认1小时,20条
-p -m binance_api klines ADAUSDC 1h 50  # 指定间隔和数量
+p -m ibkr_api klines ADAUSDC     # 默认1小时,20条
+p -m ibkr_api klines ADAUSDC 1h 50  # 指定间隔和数量
 
 # 未成交订单
-p -m binance_api orders             # 所有订单
-p -m binance_api orders ADAUSDC     # 指定交易对
-p -m binance_api orders ADAUSDC buy # 指定方向
+p -m ibkr_api orders             # 所有订单
+p -m ibkr_api orders ADAUSDC     # 指定交易对
+p -m ibkr_api orders ADAUSDC buy # 指定方向
 ```
 
 ### 2. 独立模块运行
@@ -80,31 +80,31 @@ p -m binance_api orders ADAUSDC buy # 指定方向
 
 ```bash
 # 账户信息
-p binance_api/get_account.py
+p ibkr_api/get_account.py
 
 # 指定资产余额
-p binance_api/get_balance.py BTC
+p ibkr_api/get_balance.py BTC
 
 # 交易对信息
-p binance_api/get_exchange_info.py ADAUSDC
+p ibkr_api/get_exchange_info.py ADAUSDC
 
 # K线数据
-p binance_api/get_klines.py ADAUSDC 1h 100
+p ibkr_api/get_klines.py ADAUSDC 1h 100
 
 # 价格信息
-p binance_api/get_symbol_ticker.py ADAUSDC 24hr
+p ibkr_api/get_symbol_ticker.py ADAUSDC 24hr
 
 # 未成交订单
-p binance_api/get_open_orders.py ADAUSDC
+p ibkr_api/get_open_orders.py ADAUSDC
 
 # 测试下单
-p binance_api/place_order.py test ADAUSDC BUY LIMIT 0.001 50000
+p ibkr_api/place_order.py test ADAUSDC BUY LIMIT 0.001 50000
 ```
 
 ### 3. 作为库导入使用
 
 ```python
-from binance_api import (
+from ibkr_api import (
     get_configured_client,
     account_info,
     get_balance,
@@ -177,20 +177,20 @@ if client:
 
 ```bash
 # 测试API连接
-p -m binance_api test
+p -m ibkr_api test
 
 # 测试公共函数
-p binance_api/common.py
+p ibkr_api/common.py
 
 # 测试各个模块
-p binance_api/get_account.py
-p binance_api/get_balance.py
-p binance_api/get_exchange_info.py
+p ibkr_api/get_account.py
+p ibkr_api/get_balance.py
+p ibkr_api/get_exchange_info.py
 ```
 
 ## 🔄 与 MEXC API 模块的关系
 
-binance_api 模块参考了 mexc_api 的设计模式,但针对 Binance API 的特性进行了适配:
+ibkr_api 模块参考了 mexc_api 的设计模式,但针对 Binance API 的特性进行了适配:
 
 - 使用 python-binance SDK 而非 mexc-sdk
 - 支持测试网切换 (MEXC 只有主网)

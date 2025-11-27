@@ -108,7 +108,7 @@ def test_validate_signal_requires_threshold(monkeypatch) -> None:
     _stub_config(monkeypatch)
     monkeypatch.setattr(
         order_builder_app,
-        "demark_with_binance_api",
+        "demark_with_ibkr_api",
         lambda *_, **__: ("BUY", 8, False, []),
     )
 
@@ -119,7 +119,7 @@ def test_validate_signal_accepts_valid_buy_signal(monkeypatch) -> None:
     _stub_config(monkeypatch)
     monkeypatch.setattr(
         order_builder_app,
-        "demark_with_binance_api",
+        "demark_with_ibkr_api",
         lambda *_, **__: ("BUY", 10, True, []),
     )
 
@@ -131,7 +131,7 @@ def test_validate_signal_accepts_sell_without_countdown(monkeypatch) -> None:
     _stub_config(monkeypatch)
     monkeypatch.setattr(
         order_builder_app,
-        "demark_with_binance_api",
+        "demark_with_ibkr_api",
         lambda *_, **__: ("SELL", 10, False, []),
     )
 
