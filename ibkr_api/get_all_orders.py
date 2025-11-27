@@ -1,4 +1,4 @@
-"""获取 IBKR 历史订单与成交(最小封装)."""
+"""获取 IBKR 历史成交(最小封装)."""
 
 from __future__ import annotations
 
@@ -13,23 +13,19 @@ from loguru import logger
 
 from ibkr_api.common import IBKRClient, get_configured_client
 from ibkr_api.get_executions import get_executions
-from ibkr_api.get_open_orders import get_open_orders
 from shared.output_utils import print_json
 
 
 def get_all_orders(client: IBKRClient, symbol: str | None = None) -> dict[str, Any]:
-    """获取未完成订单与成交明细(可选按 symbol 过滤)."""
-    open_orders = get_open_orders(client)
+    """获取成交明细(可选按 symbol 过滤)."""
     executions = get_executions(client)
 
     if symbol:
         symbol_upper = symbol.upper()
-        open_orders = [o for o in open_orders if (o.get("symbol") or "").upper() == symbol_upper]
         executions = [e for e in executions if (e.get("symbol") or "").upper() == symbol_upper]
 
     return {
         "symbol": symbol.upper() if symbol else None,
-        "open_orders": open_orders,
         "executions": executions,
     }
 

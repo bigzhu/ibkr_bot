@@ -247,7 +247,6 @@ class IBKRClient(EWrapper, EClient):
         filter_obj = ExecutionFilter()
         if self.config.account:
             filter_obj.acctCode = self.config.account
-        filter_obj.clientId = self.config.client_id
 
         self.reqExecutions(req_id, filter_obj)
         if not self._executions_event.wait(timeout=timeout):
