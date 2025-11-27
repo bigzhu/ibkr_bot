@@ -1,11 +1,16 @@
 """
-Binance API 公共函数
+IBKR API 公共函数
 
-提供可复用的数据库连接, API 配置, 客户端创建等功能, 遵循 fail-fast 原则.
+提供可复用的 API 配置与客户端创建, 遵循 fail-fast 原则.
 """
 
+from __future__ import annotations
+
+import os
+import threading
+import time
+from dataclasses import dataclass
 from decimal import Decimal
-from pathlib import Path
 from typing import Any
 
 if __name__ == "__main__" and __package__ is None:
@@ -13,157 +18,165 @@ if __name__ == "__main__" and __package__ is None:
         "请在项目根目录使用 `p -m ibkr_api.common` 运行该模块, 无需手动修改 sys.path"
     )
 
-from binance.client import Client
+from ibapi.client import EClient
+from ibapi.contract import Contract
+from ibapi.wrapper import EWrapper
 from loguru import logger
 
-from database.db_config import get_db_manager
-
-# 简单的配置缓存, 避免重复数据库查询
+# 简单的配置缓存, 避免重复读取
 _config_cache: dict[str, Any] | None = None
 # 简单的客户端缓存, 避免重复创建与握手
-_client_cache: Client | None = None
+_client_cache: IBKRClient | None = None
 
 
-def get_api_config_from_db() -> dict[str, Any]:
-    """从数据库获取 Binance API 配置, 缓存并返回."""
+@dataclass(slots=True)
+class IBKRConfig:
+    host: str
+    port: int
+    client_id: int
+    account: str | None
+    base_currency: str
+    paper: bool
 
+
+class IBKRClient(EWrapper, EClient):
+    """最小化 IBKR 客户端封装, 提供同步 account_summary."""
+
+    def __init__(self, config: IBKRConfig):
+        EWrapper.__init__(self)
+        EClient.__init__(self, wrapper=self)
+        self.config = config
+        self._connected_event = threading.Event()
+        self._summary_event = threading.Event()
+        self._summary_lock = threading.Lock()
+        self._summary: dict[str, Any] = {}
+        self._next_req_id = 1
+
+    # ===== EWrapper 回调 =====
+    def accountSummary(self, reqId: int, account: str, tag: str, value: str, currency: str) -> None:
+        with self._summary_lock:
+            self._summary[tag] = value
+            self._summary.setdefault("account", account)
+            self._summary.setdefault("currency", currency)
+
+    def nextValidId(self, orderId: int) -> None:  # - IBKR 回调命名
+        self._connected_event.set()
+
+    def accountSummaryEnd(self, reqId: int) -> None:  # - IBKR 回调命名
+        self._summary_event.set()
+
+    # ===== 业务方法 =====
+    def connect_and_start(self, timeout: float = 5.0) -> None:
+        """连接 IB Gateway/TWS 并启动读写线程."""
+        self.connect(self.config.host, self.config.port, self.config.client_id)
+        thread = threading.Thread(target=self.run, name="ibkr-client-thread", daemon=True)
+        thread.start()
+
+        start = time.time()
+        while not self.isConnected():
+            if time.time() - start > timeout:
+                raise TimeoutError("IBKR 连接超时, 请确认 Gateway/TWS 已启动并允许 API")
+            time.sleep(0.1)
+
+        if not self._connected_event.wait(timeout=timeout):
+            raise TimeoutError("IBKR 连接未完成握手(nextValidId) , 请检查 Gateway/TWS 状态")
+
+    def account_summary(self, timeout: float = 5.0) -> dict[str, Any]:
+        """同步获取账户概要信息."""
+        if not self.isConnected():
+            self.connect_and_start()
+
+        with self._summary_lock:
+            self._summary.clear()
+        self._summary_event.clear()
+
+        req_id = self._next_req_id
+        self._next_req_id += 1
+
+        tags = "NetLiquidation,AvailableFunds,BuyingPower,TotalCashValue,EquityWithLoanValue"
+        self.reqAccountSummary(req_id, "All", tags)
+
+        if not self._summary_event.wait(timeout=timeout):
+            self.cancelAccountSummary(req_id)
+            raise TimeoutError("获取 IBKR 账户概要超时")
+
+        self.cancelAccountSummary(req_id)
+
+        with self._summary_lock:
+            if not self._summary:
+                raise ValueError("未能获取 IBKR 账户概要")
+            return dict(self._summary)
+
+    def get_current_price(self, contract: Contract) -> Decimal:
+        """占位: 获取当前价格, 需要补充行情订阅实现."""
+        raise NotImplementedError("行情获取需另行实现")
+
+
+def get_api_config() -> IBKRConfig:
+    """从环境变量获取 IBKR 配置, 缓存并返回."""
     global _config_cache
 
     if _config_cache is not None:
-        return _config_cache
+        return IBKRConfig(**_config_cache)
 
-    db = get_db_manager()
-    rows = db.execute_query(
-        """
-        SELECT config_key, config_value
-        FROM system_config
-        WHERE config_key IN ('MAIN_BINANCE_API_KEY', 'MAIN_BINANCE_SECRET_KEY', 'BINANCE_TESTNET')
-        """
-    )
-
-    config_map = {row["config_key"]: row["config_value"] for row in rows}
-
-    api_key = config_map.get("MAIN_BINANCE_API_KEY")
-    secret_key = config_map.get("MAIN_BINANCE_SECRET_KEY")
-    if not api_key or not secret_key:
-        raise ValueError("Binance API 配置不完整, 请在 system_config 中设置密钥")
-
-    raw_testnet = config_map.get("BINANCE_TESTNET", "false")
-    testnet = raw_testnet.lower() == "true"
+    host = os.getenv("IBKR_HOST", "127.0.0.1")
+    port = int(os.getenv("IBKR_PORT", "4001"))
+    client_id = int(os.getenv("IBKR_CLIENT_ID", "1"))
+    account = os.getenv("IBKR_ACCOUNT")
+    base_currency = os.getenv("BASE_CURRENCY", "USD")
+    paper_raw = os.getenv("IBKR_PAPER", "true").lower()
+    paper = paper_raw == "true"
 
     config_dict = {
-        "api_key": api_key,
-        "secret_key": secret_key,
-        "testnet": testnet,
-        "environment": "testnet" if testnet else "mainnet",
+        "host": host,
+        "port": port,
+        "client_id": client_id,
+        "account": account,
+        "base_currency": base_currency,
+        "paper": paper,
     }
     _config_cache = config_dict
-    return config_dict
+    return IBKRConfig(**config_dict)
 
 
-def get_configured_client() -> Client:
-    """获取已配置的Binance客户端
-
-    Returns:
-        Client: Binance客户端
-
-    Raises:
-        ValueError: 当API配置未找到时
-    """
+def get_configured_client() -> IBKRClient:
+    """获取已配置的 IBKR 客户端."""
     global _client_cache
 
-    # 复用已创建的客户端
     if _client_cache is not None:
         return _client_cache
 
-    api_config = get_api_config_from_db()
-
-    if not api_config:
-        raise ValueError("Binance API配置未找到,请先配置API密钥")
-
-    _client_cache = Client(
-        api_key=api_config["api_key"],
-        api_secret=api_config["secret_key"],
-        testnet=api_config["testnet"],
-    )
-    return _client_cache
+    config = get_api_config()
+    client = IBKRClient(config)
+    client.connect_and_start()
+    _client_cache = client
+    return client
 
 
-def get_configured_client_with_config() -> tuple[Client, dict[str, Any]]:
-    """获取已配置的Binance客户端和配置信息
-
-    Returns:
-        tuple: (client, config)
-
-    Raises:
-        ValueError: 当API配置未找到时
-    """
-    # 复用单例客户端, 同时返回已缓存/获取的配置
-    api_config = get_api_config_from_db()
-
-    if not api_config:
-        raise ValueError("Binance API配置未找到,请先配置API密钥")
-
+def get_configured_client_with_config() -> tuple[IBKRClient, IBKRConfig]:
+    """获取客户端与配置."""
     client = get_configured_client()
-    return client, api_config
+    config = get_api_config()
+    return client, config
 
 
 def reset_client_cache() -> None:
-    """重置已缓存的Binance客户端(测试或更换配置时使用)."""
-    global _client_cache
+    """重置客户端与配置缓存."""
+    global _client_cache, _config_cache
+    if _client_cache is not None and _client_cache.isConnected():
+        _client_cache.disconnect()
     _client_cache = None
+    _config_cache = None
 
 
 def print_api_setup_help() -> None:
-    """打印API设置帮助信息"""
-    logger.error("❌ Binance API密钥未配置")
-
-
-def get_current_price(client: Client, symbol: str) -> Decimal:
-    """获取交易对当前价格 - fail-fast原则
-
-    统一的价格获取函数,消除项目中的代码重复
-
-    Args:
-        client: 币安客户端
-        symbol: 交易对符号
-
-    Returns:
-        Decimal: 当前价格
-
-    Raises:
-        任何币安API异常直接向上传播,遵循fail-fast原则
-    """
-    ticker = client.get_symbol_ticker(symbol=symbol.upper())
-    return Decimal(str(ticker["price"]))
+    """打印 API 设置帮助信息."""
+    logger.error("❌ IBKR API 未配置, 请检查 IBKR_HOST/IBKR_PORT/IBKR_CLIENT_ID 等环境变量")
 
 
 if __name__ == "__main__":
-    """测试公共函数 - 遵循金融系统fail-fast原则, 不捕获任何异常"""
-    logger.info("🔧 Binance API公共函数测试")
-
-    logger.info("1. 测试项目路径")
-    project_root = Path(__file__).parent.parent
-    from database.db_config import get_database_path
-
-    db_path = get_database_path()
-    logger.info(f"   ✅ 项目根目录: {project_root}")
-    logger.info(f"   ✅ 数据库路径: {db_path}")
-
-    logger.info("2. 测试API配置获取")
+    logger.info("🔧 IBKR API 公共函数测试")
     client, config = get_configured_client_with_config()
-    if not client or not config:
-        print_api_setup_help()
-        exit(1)
-
-    environment = config["environment"]
-    logger.info(f"   ✅ API配置已就绪, 环境: {environment}")
-
-    # 测试API连接 - 不捕获异常, 失败时立即终止
-    logger.info("3. 测试API连接")
-    account = client.get_account()  # 任何异常都会导致程序终止
-    account_type = account.get("accountType", "SPOT")
-    logger.info(f"   ✅ API连接成功, 账户类型: {account_type}")
-
-    logger.info("✅ 公共函数测试完成")
-    logger.info(f"🔧 环境: {environment}")
+    logger.info(f"   ✅ 客户端已连接, host={config.host}, port={config.port}, client_id={config.client_id}")
+    summary = client.account_summary()
+    logger.info(f"   ✅ 账户概要: {summary}")
