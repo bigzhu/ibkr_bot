@@ -1,0 +1,839 @@
+// app global css in SCSS form
+// BigZhu Trading Bot - Global Design System
+// --------------------------------------------------
+
+@import './quasar.variables';
+@import './stat-cards';
+@import './modern-pages';
+@import './components';
+
+// 🌐 全局重置和基础样式
+// --------------------------------------------------
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    Inter,
+    'Helvetica Neue',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $dark;
+  color: rgb(232 236 255 / 88%);
+}
+
+html,
+body,
+#q-app {
+  background-color: $dark;
+  min-height: 100%;
+}
+
+#q-app {
+  color: inherit;
+}
+
+body.q-body--light,
+body.q-body--dark {
+  background-color: $dark;
+}
+
+// 🎨 设计系统工具类
+// --------------------------------------------------
+
+// ⚡ 原子布局工具类 (消除重复的flex布局)
+// --------------------------------------------------
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-center-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center-column {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.flex-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// 💫 通用动画工具类 (消除重复的hover效果)
+// --------------------------------------------------
+.hover-lift {
+  transition: all $transition-base $ease-out-cubic;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+// ✒️ 字体与文本工具类
+// --------------------------------------------------
+.text-no-transform {
+  text-transform: none !important;
+}
+
+.display-hero {
+  font-size: $font-size-hero;
+  line-height: 1;
+  font-weight: 700;
+}
+
+// 🌫️ 透明度工具类
+// --------------------------------------------------
+.opacity-subtle {
+  opacity: $opacity-subtle !important;
+}
+
+.opacity-muted {
+  opacity: $opacity-muted !important;
+}
+
+.opacity-disabled {
+  opacity: $opacity-disabled !important;
+}
+
+// 📐 布局尺寸工具类
+// --------------------------------------------------
+.min-width-dropdown {
+  min-width: $menu-width-md !important;
+}
+
+.table-auto {
+  table-layout: auto !important;
+}
+
+.hover-scale {
+  transition: all $transition-base $ease-out-cubic;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.hover-scale-small {
+  transition: all $transition-base $ease-out-cubic;
+
+  &:hover {
+    transform: scale(1.005);
+  }
+}
+
+.hover-glow {
+  transition: all $transition-base $ease-out-cubic;
+
+  &:hover {
+    box-shadow: 0 0 20px $primary-alpha-30;
+  }
+}
+
+.hover-slide-right {
+  transition: all $transition-base $ease-out-cubic;
+
+  &:hover {
+    transform: translateX(2px);
+  }
+}
+
+// 🎯 通用图标容器 (消除重复的图标样式)
+// --------------------------------------------------
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all $transition-base $ease-out-cubic;
+
+  &.icon-sm {
+    width: 32px;
+    height: 32px;
+  }
+
+  &.icon-md {
+    width: 40px;
+    height: 40px;
+  }
+
+  &.icon-lg {
+    width: 48px;
+    height: 48px;
+  }
+
+  &.icon-xl {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+// 🎨 通用状态背景工具类 (消除重复的背景色定义)
+// --------------------------------------------------
+.bg-primary-alpha {
+  background: $primary-alpha-10;
+}
+
+.bg-primary-alpha-light {
+  background: $primary-alpha-05;
+}
+
+.bg-success-alpha {
+  background: $success-alpha-10;
+}
+
+.bg-warning-alpha {
+  background: $warning-alpha-10;
+}
+
+.bg-danger-alpha {
+  background: $danger-alpha-10;
+}
+
+.bg-info-alpha {
+  background: $info-alpha-10;
+}
+
+.bg-white-alpha {
+  background: $white-alpha-10;
+}
+
+.bg-black-alpha {
+  background: $black-alpha-02;
+}
+
+// 渐变背景类
+.bg-gradient-primary {
+  background: $gradient-primary !important;
+}
+
+.bg-gradient-success {
+  background: $gradient-success !important;
+}
+
+.bg-gradient-danger {
+  background: $gradient-danger !important;
+}
+
+.bg-gradient-info {
+  background: $gradient-info !important;
+}
+
+.bg-gradient-warning {
+  background: $gradient-warning !important;
+}
+
+// 玻璃拟态效果
+.glass-card {
+  background: $glass-bg;
+  backdrop-filter: $glass-backdrop;
+  border: 1px solid $glass-border;
+  border-radius: $border-radius-md;
+
+  .body--dark & {
+    background: $glass-bg-dark;
+  }
+}
+
+// 阴影系统
+.shadow-sm {
+  box-shadow: $shadow-sm;
+}
+
+.shadow-md {
+  box-shadow: $shadow-md;
+}
+
+.shadow-lg {
+  box-shadow: $shadow-lg;
+}
+
+.shadow-xl {
+  box-shadow: $shadow-xl;
+}
+
+// 现代卡片样式
+.modern-card {
+  border-radius: $border-radius-lg;
+  border: 1px solid $white-alpha-10;
+  backdrop-filter: blur(10px);
+  transition: all $transition-base $ease-out-cubic;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-xl;
+  }
+
+  .body--dark & {
+    background: $white-alpha-02;
+    border-color: $white-alpha-05;
+  }
+}
+
+// 统计卡片专用样式
+.stat-card {
+  border-radius: $border-radius-lg;
+  position: relative;
+  overflow: hidden;
+  transition: all $transition-base $ease-out-cubic;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, $white-alpha-10 0%, $white-alpha-05 100%);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px $black-alpha-15;
+  }
+
+  &.stat-card-primary {
+    background: $gradient-primary;
+  }
+
+  &.stat-card-success {
+    background: $gradient-success;
+  }
+
+  &.stat-card-info {
+    background: $gradient-info;
+  }
+
+  &.stat-card-warning {
+    background: $gradient-warning;
+  }
+}
+
+// 🎯 组件增强样式
+// --------------------------------------------------
+
+// 按钮增强
+.q-btn {
+  text-transform: none !important;
+  font-weight: 500;
+  border-radius: $border-radius-sm;
+  transition: all $transition-base $ease-out-cubic;
+
+  &.btn-gradient {
+    background: $gradient-primary;
+    color: white;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &.btn-glass {
+    background: $glass-bg;
+    backdrop-filter: $glass-backdrop;
+    border: 1px solid $glass-border;
+
+    .body--dark & {
+      background: $glass-bg-dark;
+    }
+  }
+}
+
+// 🗂️ 统一表格样式 (合并重复的表格定义)
+// --------------------------------------------------
+.q-table,
+.modern-table {
+  border-radius: $border-radius-md;
+  overflow: hidden;
+
+  .q-table__container,
+  :deep(.q-table__container) {
+    border-radius: $border-radius-md;
+  }
+
+  thead tr:first-child th,
+  :deep(thead tr:first-child th) {
+    background: $primary-alpha-05;
+    color: var(--q-primary);
+    font-weight: 600;
+    padding: 16px 12px;
+
+    .body--dark & {
+      background: $primary-alpha-10;
+    }
+  }
+
+  tbody tr,
+  :deep(tbody tr) {
+    transition: all $transition-fast $ease-out-cubic;
+
+    &:hover {
+      background: $primary-alpha-03;
+      transform: scale(1.005);
+    }
+
+    &:nth-child(even) {
+      background: $black-alpha-02;
+    }
+
+    td {
+      padding: 16px 12px;
+      vertical-align: middle;
+    }
+  }
+}
+
+// 🎯 统一卡片头部样式 (合并重复的header定义)
+// --------------------------------------------------
+.card-header,
+.modern-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 0;
+
+  &.card-header--compact {
+    padding: 16px 16px 0;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-icon {
+    background: $primary-alpha-10;
+    padding: 8px;
+    border-radius: $border-radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-base $ease-out-cubic;
+    margin-right: 16px;
+
+    .body--dark & {
+      background: $primary-alpha-20;
+    }
+
+    &:hover {
+      background: $primary-alpha-15;
+      transform: scale(1.1);
+
+      .body--dark & {
+        background: $primary-alpha-30;
+      }
+    }
+  }
+
+  .header-content {
+    flex: 1;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+// 输入框增强
+.q-field {
+  .q-field__control {
+    border-radius: $border-radius-sm;
+  }
+
+  &.q-field--focused .q-field__control {
+    box-shadow: 0 0 0 2px $primary-alpha-20;
+  }
+
+  &.q-field--filled .q-field__control {
+    background: $primary-alpha-05;
+
+    .body--dark & {
+      background: $white-alpha-05;
+    }
+  }
+}
+
+// 卡片增强
+.q-card {
+  border-radius: $border-radius-md;
+  border: 1px solid $black-alpha-05;
+
+  .body--dark & {
+    border-color: $white-alpha-10;
+  }
+
+  &.q-card--elevated {
+    box-shadow: $shadow-md;
+  }
+}
+
+// Chip 增强
+.q-chip {
+  border-radius: $border-radius-sm;
+  font-weight: 500;
+
+  &.q-chip--dense {
+    border-radius: calc(#{$border-radius-sm} / 1.5);
+  }
+}
+
+// 💫 动画和过渡
+// --------------------------------------------------
+
+// 页面进入动画
+.page-enter-active {
+  transition: all $transition-slow $ease-out-cubic;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// 加载骨架动画
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+
+  .body--dark & {
+    background: linear-gradient(90deg, #2a2a2a 25%, #1a1a1a 50%, #2a2a2a 75%);
+    background-size: 200px 100%;
+  }
+}
+
+// 悬浮动画
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+// 脉动动画
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+// 发光效果动画
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+}
+
+.glow-pulse-animation {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+// 页面进入动画
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter-animation {
+  animation: fade-in-up 0.6s $ease-out-cubic;
+}
+
+// 自动应用到所有页面
+.q-page {
+  animation: fade-in-up 0.6s $ease-out-cubic;
+}
+
+// 统一的加载状态动画
+.modern-table :deep(.q-inner-loading),
+.q-table .q-inner-loading {
+  background: rgb(255 255 255 / 90%);
+
+  .body--dark & {
+    background: rgb(0 0 0 / 70%);
+  }
+}
+
+// 🔧 工具类
+// --------------------------------------------------
+
+// 文本渐变
+.text-gradient {
+  color: $primary; // fallback color for better compatibility
+  background: $gradient-primary;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  // 兼容性检查：如果不支持background-clip: text，则显示normal色彩
+  @supports not (background-clip: text) {
+    -webkit-text-fill-color: initial;
+    color: $primary;
+  }
+
+  // 深色模式下的备用方案
+  .body--dark & {
+    color: $grey-3; // fallback for dark mode
+
+    @supports not (background-clip: text) {
+      color: $grey-3;
+    }
+  }
+}
+
+// 圆角工具类
+.rounded-sm {
+  border-radius: $border-radius-sm;
+}
+
+.rounded-md {
+  border-radius: $border-radius-md;
+}
+
+.rounded-lg {
+  border-radius: $border-radius-lg;
+}
+
+.rounded-xl {
+  border-radius: $border-radius-xl;
+}
+
+// 间距工具类
+.gap-xs {
+  gap: $spacing-xs;
+}
+
+.gap-sm {
+  gap: $spacing-sm;
+}
+
+.gap-md {
+  gap: $spacing-md;
+}
+
+.gap-lg {
+  gap: $spacing-lg;
+}
+
+.gap-xl {
+  gap: $spacing-xl;
+}
+
+// 📱 响应式设计
+// --------------------------------------------------
+
+@media (width <= 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  .stat-card:hover {
+    transform: none;
+  }
+
+  .modern-card:hover {
+    transform: none;
+  }
+
+  // 🔤 移动端通用字体调整 (从页面样式中提取的公共模式)
+  // --------------------------------------------------
+  .text-h4 {
+    font-size: 1.5rem !important;
+  }
+
+  .text-h5 {
+    font-size: 1.25rem !important;
+  }
+
+  .text-h6 {
+    font-size: 1rem !important;
+  }
+
+  .text-caption {
+    font-size: 0.7rem !important;
+  }
+
+  // 📊 移动端表格优化 (统一所有页面的表格移动端样式)
+  // --------------------------------------------------
+  .q-table {
+    font-size: 0.875rem !important;
+
+    &.compact-mobile {
+      font-size: 0.8rem !important;
+    }
+  }
+
+  // 💳 移动端卡片调整 (统一卡片内边距)
+  // --------------------------------------------------
+  .q-card {
+    .q-card-section {
+      padding: 16px !important;
+
+      &.compact-mobile {
+        padding: 6px !important;
+      }
+    }
+  }
+
+  // 🎯 移动端页面头部调整
+  // --------------------------------------------------
+  .trading-logs-card {
+    .card-header .flex {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 12px !important;
+    }
+  }
+}
+
+@media (width >= 769px) {
+  .desktop-hidden {
+    display: none !important;
+  }
+}
+
+// 🎪 自定义滚动条
+// --------------------------------------------------
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(0 0 0 / 10%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(102 126 234 / 30%);
+  border-radius: 4px;
+  transition: background $transition-base;
+
+  &:hover {
+    background: rgb(102 126 234 / 50%);
+  }
+}
+
+// 🌙 深色模式特殊处理
+// --------------------------------------------------
+
+.body--dark {
+  // 深色模式下的特殊样式
+  .q-table {
+    thead tr:first-child th {
+      background: rgb(102 126 234 / 15%);
+    }
+  }
+
+  .q-table tbody tr:nth-child(even),
+  .modern-table tbody tr:nth-child(even),
+  :deep(.q-table tbody tr:nth-child(even)),
+  .modern-table :deep(tbody tr:nth-child(even)) {
+    background: $white-alpha-02;
+  }
+
+  .q-table tbody tr:hover,
+  .modern-table tbody tr:hover,
+  :deep(.q-table tbody tr:hover),
+  .modern-table :deep(tbody tr:hover) {
+    background: rgb(102 126 234 / 6%);
+  }
+
+  .modern-card:hover {
+    box-shadow: 0 20px 40px rgb(0 0 0 / 30%);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(255 255 255 / 10%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 20%);
+
+    &:hover {
+      background: rgb(255 255 255 / 30%);
+    }
+  }
+}

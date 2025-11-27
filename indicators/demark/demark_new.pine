@@ -1,0 +1,37 @@
+//@version=6
+indicator("demark traditional (close-based)", overlay=true, max_labels_count=500)
+
+// === 参数 ===
+highlightFrom = input.int(4, "高亮起始计数 ≥", minval=1, maxval=13)
+offsetTicksUp = input.int(1, "上沿贴边距离（ticks）", minval=0, maxval=10)
+offsetTicksDn = input.int(1, "下沿贴边距离（ticks）", minval=0, maxval=10)
+
+// === 计算 TD 计数（采用蜡烛中值，与 mid[n-4] 比较） ===
+var int tdUp = 0
+var int tdDn = 0
+mid = (high + low) * 0.5
+condUp = not na(mid[4]) and (mid > mid[4])   // 上涨序列（SELL方向）
+condDn = not na(mid[4]) and (mid < mid[4])   // 下跌序列（BUY方向）
+tdUp := condUp ? (tdUp[1] > 0 ? tdUp[1] + 1 : 1) : 0
+tdDn := condDn ? (tdDn[1] > 0 ? tdDn[1] + 1 : 1) : 0
+
+// === 颜色与样式（柔和色，从4起高亮） ===
+up_hi = tdUp >= highlightFrom
+dn_hi = tdDn >= highlightFrom
+upBg  = color.new(color.red,   up_hi ? 15 : 60)
+dnBg  = color.new(color.green, dn_hi ? 25 : 60)
+upTx  = color.white
+dnTx  = color.white
+upSz  = size.tiny
+dnSz  = size.tiny
+
+// === 贴边位置（用最小跳动单位 mintick 微调） ===
+mt  = syminfo.mintick
+yUp = high + mt * offsetTicksUp
+yDn = low  - mt * offsetTicksDn
+
+// === 数字标签（仅数字；紧贴K线；全部单行调用，避免语法错误） ===
+if (tdUp > 0)
+    label.new(bar_index, yUp, str.tostring(tdUp), yloc=yloc.price, style=label.style_label_down, size=upSz, color=upBg, textcolor=upTx)
+if (tdDn > 0)
+    label.new(bar_index, yDn, str.tostring(tdDn), yloc=yloc.price, style=label.style_label_up, size=dnSz, color=dnBg, textcolor=dnTx)

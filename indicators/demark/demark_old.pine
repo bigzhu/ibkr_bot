@@ -1,0 +1,80 @@
+//DeMark_14_Indicator_Enhanced_Vic 
+// DeMark 14指标
+//@version=6
+//version 1.0.0
+indicator("DeMark 14", overlay=true)
+
+// 原始DeMark 14逻辑
+TD = 0
+TD := close > close[4] ? nz(TD[1])+1 : 0
+TDUp = TD - ta.valuewhen(TD < TD[1], TD, 1)
+
+TS = 0
+TS := close < close[4] ? nz(TS[1])+1 : 0
+TDDn = TS - ta.valuewhen(TS < TS[1], TS, 1)
+
+// 绘制所有非零的TDUp信号（红色向下三角）
+plotshape(TDUp == 1, style=shape.triangledown, color=color.new(color.red, 70), text="1", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 2, style=shape.triangledown, color=color.new(color.red, 70), text="2", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 3, style=shape.triangledown, color=color.new(color.red, 70), text="3", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 4, style=shape.triangledown, color=color.new(color.red, 70), text="4", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 5, style=shape.triangledown, color=color.new(color.red, 70), text="5", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 6, style=shape.triangledown, color=color.new(color.red, 70), text="6", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 7, style=shape.triangledown, color=color.new(color.red, 70), text="7", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 8, style=shape.triangledown, color=color.new(color.red, 70), text="8", textcolor=color.new(color.red, 70), location=location.abovebar)
+plotshape(TDUp == 9, style=shape.triangledown, color=color.red, text="9", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 10, style=shape.triangledown, color=color.red, text="10", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 11, style=shape.triangledown, color=color.red, text="11", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 12, style=shape.triangledown, color=color.red, text="12", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 13, style=shape.triangledown, color=color.red, text="13", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 14, style=shape.triangledown, color=color.red, text="14", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 15, style=shape.triangledown, color=color.red, text="15", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 16, style=shape.triangledown, color=color.red, text="16", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 17, style=shape.triangledown, color=color.red, text="17", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 18, style=shape.triangledown, color=color.red, text="18", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 19, style=shape.triangledown, color=color.red, text="19", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 20, style=shape.triangledown, color=color.red, text="20", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 21, style=shape.triangledown, color=color.red, text="21", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 22, style=shape.triangledown, color=color.red, text="22", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 23, style=shape.triangledown, color=color.red, text="23", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 24, style=shape.triangledown, color=color.red, text="24", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 25, style=shape.triangledown, color=color.red, text="25", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 26, style=shape.triangledown, color=color.red, text="26", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 27, style=shape.triangledown, color=color.red, text="27", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 28, style=shape.triangledown, color=color.red, text="28", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 29, style=shape.triangledown, color=color.red, text="29", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp == 30, style=shape.triangledown, color=color.red, text="30", textcolor=color.red, location=location.abovebar)
+plotshape(TDUp > 30, style=shape.triangledown, color=color.red, text="30+", textcolor=color.red, location=location.abovebar)
+
+// 绘制所有非零的TDDn信号（绿色向上三角）
+plotshape(TDDn == 1, style=shape.triangleup, color=color.new(color.green, 70), text="1", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 2, style=shape.triangleup, color=color.new(color.green, 70), text="2", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 3, style=shape.triangleup, color=color.new(color.green, 70), text="3", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 4, style=shape.triangleup, color=color.new(color.green, 70), text="4", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 5, style=shape.triangleup, color=color.new(color.green, 70), text="5", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 6, style=shape.triangleup, color=color.new(color.green, 70), text="6", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 7, style=shape.triangleup, color=color.new(color.green, 70), text="7", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 8, style=shape.triangleup, color=color.new(color.green, 70), text="8", textcolor=color.new(color.green, 70), location=location.belowbar)
+plotshape(TDDn == 9, style=shape.triangleup, color=color.green, text="9", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 10, style=shape.triangleup, color=color.green, text="10", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 11, style=shape.triangleup, color=color.green, text="11", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 12, style=shape.triangleup, color=color.green, text="12", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 13, style=shape.triangleup, color=color.green, text="13", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 14, style=shape.triangleup, color=color.green, text="14", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 15, style=shape.triangleup, color=color.green, text="15", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 16, style=shape.triangleup, color=color.green, text="16", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 17, style=shape.triangleup, color=color.green, text="17", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 18, style=shape.triangleup, color=color.green, text="18", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 19, style=shape.triangleup, color=color.green, text="19", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 20, style=shape.triangleup, color=color.green, text="20", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 21, style=shape.triangleup, color=color.green, text="21", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 22, style=shape.triangleup, color=color.green, text="22", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 23, style=shape.triangleup, color=color.green, text="23", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 24, style=shape.triangleup, color=color.green, text="24", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 25, style=shape.triangleup, color=color.green, text="25", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 26, style=shape.triangleup, color=color.green, text="26", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 27, style=shape.triangleup, color=color.green, text="27", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 28, style=shape.triangleup, color=color.green, text="28", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 29, style=shape.triangleup, color=color.green, text="29", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn == 30, style=shape.triangleup, color=color.green, text="30", textcolor=color.green, location=location.belowbar)
+plotshape(TDDn > 30, style=shape.triangleup, color=color.green, text="30+", textcolor=color.green, location=location.belowbar) 

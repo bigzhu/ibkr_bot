@@ -1,0 +1,214 @@
+// 📊 统计卡片通用样式
+// --------------------------------------------------
+// 用于所有页面的统计卡片组件，确保设计一致性
+
+@import 'quasar.variables';
+
+// 🔄 兼容性支持：为使用旧结构的页面提供支持
+// --------------------------------------------------
+// 支持 stat-info + stat-value 结构 (如 SymbolsPage)
+.stat-info {
+  flex: 1;
+  min-width: 0;
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    word-break: break-all;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 80%);
+    margin-top: 4px;
+    white-space: nowrap;
+  }
+}
+
+// 🏗️ 统计卡片容器
+// --------------------------------------------------
+.stat-cards-container {
+  // Quasar行布局支持
+  &.row {
+    .col-12,
+    .col-lg-4 {
+      padding: 4px;
+    }
+  }
+
+  .stat-card-col {
+    padding: 0 6px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  .stat-card {
+    height: 100%;
+    min-height: 70px;
+
+    .stat-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      min-height: 50px;
+
+      .stat-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        flex-shrink: 0;
+
+        &.total-icon {
+          background: $primary-alpha-30;
+          color: white;
+
+          @supports (background: linear-gradient(red, blue)) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          }
+        }
+
+        &.success-icon {
+          background: rgb(0 212 170 / 30%);
+          color: white;
+
+          @supports (background: linear-gradient(red, blue)) {
+            background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+          }
+        }
+
+        &.warning-icon {
+          background: rgb(255 212 59 / 30%);
+          color: white;
+
+          @supports (background: linear-gradient(red, blue)) {
+            background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);
+          }
+        }
+
+        &.info-icon {
+          background: linear-gradient(135deg, #74c0fc 0%, #339af0 100%);
+          color: white;
+        }
+
+        &.primary-icon {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+        }
+      }
+
+      .stat-details {
+        flex: 1;
+
+        .stat-number {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: var(--q-color-grey-8);
+          line-height: 1;
+          word-break: break-all;
+
+          .body--dark & {
+            color: var(--q-color-grey-1);
+          }
+        }
+
+        .stat-label {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--q-color-grey-6);
+          margin-top: 4px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          white-space: nowrap;
+
+          .body--dark & {
+            color: var(--q-color-grey-4);
+          }
+        }
+      }
+    }
+  }
+}
+
+// 📱 响应式设计
+// --------------------------------------------------
+
+// 平板尺寸优化 (768px - 1199px)
+@media (width >= 768px) and (width <= 1199px) {
+  .stat-cards-container {
+    &.row {
+      .col-12,
+      .col-lg-4 {
+        padding: 6px;
+      }
+    }
+
+    .stat-card {
+      min-height: 100px;
+
+      .stat-content {
+        padding: 16px;
+        gap: 12px;
+
+        .stat-icon {
+          width: 40px;
+          height: 40px;
+        }
+
+        .stat-details .stat-number {
+          font-size: 1.75rem;
+        }
+
+        .stat-details .stat-label {
+          font-size: 0.8125rem;
+        }
+      }
+    }
+  }
+}
+
+// 手机尺寸优化 (< 768px)
+@media (width <= 767px) {
+  .stat-cards-container {
+    &.row {
+      .col-12,
+      .col-lg-4 {
+        padding: 4px;
+      }
+    }
+
+    .stat-card {
+      min-height: 90px;
+
+      .stat-content {
+        padding: 12px;
+        gap: 10px;
+
+        .stat-icon {
+          width: 32px;
+          height: 32px;
+        }
+
+        .stat-details .stat-number {
+          font-size: 1.25rem;
+        }
+
+        .stat-details .stat-label {
+          font-size: 0.75rem;
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+}

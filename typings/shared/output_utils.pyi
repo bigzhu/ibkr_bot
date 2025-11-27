@@ -1,0 +1,3 @@
+from typing import Any
+
+def print_json(obj: Any) -> None: ...

@@ -1,0 +1,54 @@
+//@version=6
+indicator("demark reversal signal", overlay=true, max_labels_count=500)
+
+// === 参数 ===
+highlightFrom = input.int(4, "高亮起始计数 ≥", minval=1, maxval=13)
+offsetTicksUp = input.int(1, "上沿贴边距离（ticks）", minval=0, maxval=10)
+offsetTicksDn = input.int(1, "下沿贴边距离（ticks）", minval=0, maxval=10)
+labelThresholdUp = input.int(9, "tdUp 显示阈值", minval=1, maxval=13)
+labelThresholdDn = input.int(9, "tdDn 显示阈值", minval=1, maxval=13)
+showReverseBreakUpOnly = input.bool(false, "tdUp 仅显示反向突破")
+showReverseBreakDnOnly = input.bool(false, "tdDn 仅显示反向突破")
+
+// === 计算 TD 计数（传统规则：基于收盘价严格比较 close[n] > close[n-4] / close[n] < close[n-4]） ===
+var int tdUp = 0
+var int tdDn = 0
+condUp = not na(close[4]) and (close > close[4])   // 上涨序列（SELL方向）
+condDn = not na(close[4]) and (close < close[4])   // 下跌序列（BUY方向）
+tdUp := condUp ? (tdUp[1] > 0 ? tdUp[1] + 1 : 1) : 0
+tdDn := condDn ? (tdDn[1] > 0 ? tdDn[1] + 1 : 1) : 0
+
+// === 颜色与样式（柔和色，从4起高亮） ===
+up_hi = tdUp >= highlightFrom
+dn_hi = tdDn >= highlightFrom
+upBg  = color.new(color.red,   up_hi ? 15 : 60)
+dnBg  = color.new(color.green, dn_hi ? 25 : 60)
+upTx  = color.white
+dnTx  = color.white
+upSz  = size.tiny
+dnSz  = size.tiny
+
+// === 贴边位置（用最小跳动单位 mintick 微调） ===
+mt  = syminfo.mintick
+yUp = high + mt * offsetTicksUp
+yDn = low  - mt * offsetTicksDn
+
+reverseBreakUp = not na(low[1]) and low < low[1]
+reverseBreakDn = not na(high[1]) and high > high[1]
+canShowUp = tdUp >= labelThresholdUp and (not showReverseBreakUpOnly or reverseBreakUp)
+canShowDn = tdDn >= labelThresholdDn and (not showReverseBreakDnOnly or reverseBreakDn)
+
+// === 数字标签（仅数字；紧贴K线；全部单行调用，避免语法错误） ===
+// 检查前一根K线的tdUp是否被当前K线的low突破
+if (not na(tdUp[1]) and tdUp[1] > 0 and reverseBreakUp and showReverseBreakUpOnly)
+    label.new(bar_index[1], low[1] - mt * offsetTicksDn, "S", yloc=yloc.price, style=label.style_label_up, size=upSz, color=upBg, textcolor=upTx)
+
+// 检查前一根K线的tdDn是否被当前K线的high突破
+if (not na(tdDn[1]) and tdDn[1] > 0 and reverseBreakDn and showReverseBreakDnOnly)
+    label.new(bar_index[1], high[1] + mt * offsetTicksUp, "B", yloc=yloc.price, style=label.style_label_down, size=dnSz, color=dnBg, textcolor=dnTx)
+
+if (canShowUp and not showReverseBreakUpOnly)
+    label.new(bar_index, yUp, str.tostring(tdUp), yloc=yloc.price, style=label.style_label_down, size=upSz, color=upBg, textcolor=upTx)
+
+if (canShowDn and not showReverseBreakDnOnly)
+    label.new(bar_index, yDn, str.tostring(tdDn), yloc=yloc.price, style=label.style_label_up, size=dnSz, color=dnBg, textcolor=dnTx)

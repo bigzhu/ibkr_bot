@@ -1,0 +1,62 @@
+{
+  "name": "frontend",
+  "version": "1.1.0-build.20250920-153636",
+  "description": "BigZhu 交易机器人 - 支持多交易所的自动交易机器人管理界面",
+  "productName": "BigZhu 交易机器人",
+  "author": "bigzhu <vermiliondun@gmail.com>",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
+    "lint:style": "stylelint \"src/**/*.{scss,css,vue}\"",
+    "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "test": "echo \"No test specified\" && exit 0",
+    "dev": "quasar dev",
+    "build": "npm run version:build && quasar build",
+    "build:prod": "npm run version:patch && quasar build",
+    "version:patch": "node scripts/version-bump.js patch",
+    "version:minor": "node scripts/version-bump.js minor",
+    "version:major": "node scripts/version-bump.js major",
+    "version:dev": "node scripts/version-bump.js dev",
+    "version:build": "node scripts/version-bump.js build",
+    "postinstall": "quasar prepare"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.4",
+    "axios": "^1.11.0",
+    "chart.js": "^4.4.0",
+    "decimal.js": "^10.6.0",
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.4.1",
+    "quasar": "^2.16.0",
+    "vue": "^3.4.18",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "@quasar/app-vite": "^2.1.0",
+    "@types/node": "^20.5.9",
+    "@vue/eslint-config-prettier": "^10.1.0",
+    "@vue/eslint-config-typescript": "^14.4.0",
+    "autoprefixer": "^10.4.2",
+    "cross-env": "^10.0.0",
+    "eslint": "^9.14.0",
+    "eslint-plugin-vue": "^9.30.0",
+    "globals": "^15.12.0",
+    "npm-version": "^1.1.0",
+    "postcss-html": "^1.8.0",
+    "prettier": "^3.3.3",
+    "stylelint": "^16.24.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "typescript": "~5.5.3",
+    "vite-plugin-checker": "^0.9.0",
+    "vue-tsc": "^2.0.29"
+  },
+  "engines": {
+    "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  },
+  "packageManager": "yarn@4.10.3"
+}

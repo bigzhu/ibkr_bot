@@ -1,0 +1,129 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 背景渐变 -->
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- BTC金色渐变 -->
+    <linearGradient id="btcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7931a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffb950;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- ADA蓝色渐变 -->
+    <linearGradient id="adaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0033ad;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e88e5;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- USDT绿色渐变 -->
+    <linearGradient id="usdtGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#26a17b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#50af95;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 图表线条渐变 -->
+    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4aa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00b894;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 圆角矩形背景 - 为macOS增加内边距 -->
+  <rect x="80" y="80" width="864" height="864" rx="150" ry="150" fill="url(#backgroundGradient)" />
+  
+  <!-- 主币种标志区域 - 缩放并居中 -->
+  <g transform="scale(0.85) translate(90, 90)">
+    
+    <!-- BTC标志 - 左上 -->
+    <g transform="translate(320, 280)">
+      <circle cx="0" cy="0" r="75" fill="url(#btcGradient)" stroke="#fff" stroke-width="4"/>
+      <text x="0" y="22" font-family="Arial, sans-serif" font-size="80" font-weight="bold" 
+            fill="white" text-anchor="middle">₿</text>
+    </g>
+    
+    <!-- ADA (Cardano) 标志 - 右边中间 -->
+    <g transform="translate(650, 350)">
+      <circle cx="0" cy="0" r="75" fill="url(#adaGradient)" stroke="#fff" stroke-width="4"/>
+      <!-- Cardano 官方标志 -->
+      <g transform="scale(0.95)" fill="white">
+        <!-- 主要三角形形状 -->
+        <path d="M 0,-40 L -30,25 L -15,25 L -7,10 L 7,10 L 15,25 L 30,25 Z" 
+              fill="white" stroke="none"/>
+        
+        <!-- 第一条水平线 (上) -->
+        <rect x="-35" y="-18" width="70" height="7" rx="3.5" fill="white"/>
+        
+        <!-- 第二条水平线 (下) -->
+        <rect x="-35" y="0" width="70" height="7" rx="3.5" fill="white"/>
+        
+        <!-- 三角形内部镂空 -->
+        <path d="M 0,-25 L -15,10 L -7,10 L 0,-10 L 7,10 L 15,10 Z" 
+              fill="url(#adaGradient)"/>
+      </g>
+    </g>
+    
+    <!-- USDT标志 - 左下 -->
+    <g transform="translate(350, 480)">
+      <circle cx="0" cy="0" r="75" fill="url(#usdtGradient)" stroke="#fff" stroke-width="4"/>
+      <text x="0" y="22" font-family="Arial, sans-serif" font-size="70" font-weight="bold" 
+            fill="white" text-anchor="middle">₮</text>
+    </g>
+    
+    <!-- 交易图表区域 - 更高更陡峭的收益曲线 -->
+    <g transform="translate(0, 580)">
+      <!-- 背景网格 -->
+      <g opacity="0.2">
+        <line x1="100" y1="20" x2="924" y2="20" stroke="white" stroke-width="1"/>
+        <line x1="100" y1="60" x2="924" y2="60" stroke="white" stroke-width="1"/>
+        <line x1="100" y1="100" x2="924" y2="100" stroke="white" stroke-width="1"/>
+        <line x1="100" y1="140" x2="924" y2="140" stroke="white" stroke-width="1"/>
+        <line x1="100" y1="180" x2="924" y2="180" stroke="white" stroke-width="1"/>
+        <line x1="100" y1="220" x2="924" y2="220" stroke="white" stroke-width="1"/>
+        <line x1="100" y1="260" x2="924" y2="260" stroke="white" stroke-width="1"/>
+        
+        <line x1="200" y1="20" x2="200" y2="260" stroke="white" stroke-width="1"/>
+        <line x1="300" y1="20" x2="300" y2="260" stroke="white" stroke-width="1"/>
+        <line x1="400" y1="20" x2="400" y2="260" stroke="white" stroke-width="1"/>
+        <line x1="500" y1="20" x2="500" y2="260" stroke="white" stroke-width="1"/>
+        <line x1="600" y1="20" x2="600" y2="260" stroke="white" stroke-width="1"/>
+        <line x1="700" y1="20" x2="700" y2="260" stroke="white" stroke-width="1"/>
+        <line x1="800" y1="20" x2="800" y2="260" stroke="white" stroke-width="1"/>
+      </g>
+      
+      <!-- 超陡峭的上升趋势线 -->
+      <path d="M 120,240 L 200,200 L 300,150 L 400,100 L 500,70 L 600,45 L 700,25 L 800,15 L 900,5" 
+            stroke="url(#chartGradient)" stroke-width="10" fill="none"/>
+      
+      <!-- 数据点 -->
+      <circle cx="200" cy="200" r="10" fill="url(#chartGradient)"/>
+      <circle cx="400" cy="100" r="10" fill="url(#chartGradient)"/>
+      <circle cx="600" cy="45" r="10" fill="url(#chartGradient)"/>
+      <circle cx="800" cy="15" r="10" fill="url(#chartGradient)"/>
+      
+      <!-- 成交量柱状图 -->
+      <g opacity="0.6">
+        <rect x="180" y="210" width="18" height="50" fill="url(#chartGradient)"/>
+        <rect x="280" y="180" width="18" height="80" fill="url(#chartGradient)"/>
+        <rect x="380" y="140" width="18" height="120" fill="url(#chartGradient)"/>
+        <rect x="480" y="120" width="18" height="140" fill="url(#chartGradient)"/>
+        <rect x="580" y="100" width="18" height="160" fill="url(#chartGradient)"/>
+        <rect x="680" y="130" width="18" height="130" fill="url(#chartGradient)"/>
+        <rect x="780" y="160" width="18" height="100" fill="url(#chartGradient)"/>
+      </g>
+    </g>
+    
+    <!-- 装饰光效 -->
+    <g opacity="0.3">
+      <circle cx="200" cy="200" r="3" fill="white"/>
+      <circle cx="800" cy="150" r="2" fill="white"/>
+      <circle cx="150" cy="800" r="2" fill="white"/>
+      <circle cx="850" cy="750" r="3" fill="white"/>
+    </g>
+    
+  </g>
+  
+</svg> 

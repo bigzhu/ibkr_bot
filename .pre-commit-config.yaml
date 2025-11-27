@@ -1,0 +1,42 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: ruff-format
+        entry: uv run ruff format
+        language: system
+        types: [python]
+      - id: ruff-lint
+        name: ruff-lint
+        entry: uv run ruff check --fix
+        language: system
+        types: [python]
+      - id: fix-chinese-punctuation
+        name: fix-chinese-punctuation
+        entry: uv run python scripts/fix_chinese_punctuation.py --auto
+        language: system
+        pass_filenames: true
+        files: \.(py|md|txt|ya?ml|json|toml|cfg|ini|sh|js|ts|html|css|vue|jsx|tsx)$
+      - id: commit-message-punctuation
+        name: commit-message-punctuation
+        entry: uv run python scripts/check_commit_message_punctuation.py
+        language: system
+        stages: [commit-msg]
+        pass_filenames: true
+      - id: pyright
+        name: pyright
+        entry: uv run pyright
+        language: system
+        pass_filenames: false
+      - id: frontend-lint
+        name: frontend-lint
+        entry: npm run lint --prefix web_admin/frontend
+        language: system
+        pass_filenames: false
+        files: ^web_admin/frontend/
+      - id: frontend-stylelint
+        name: frontend-stylelint
+        entry: npm run lint:style --prefix web_admin/frontend
+        language: system
+        pass_filenames: false
+        files: ^web_admin/frontend/

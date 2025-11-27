@@ -1,0 +1,198 @@
+// Quasar SCSS (& Sass) Variables - BigZhu Trading Bot
+// --------------------------------------------------
+// 科技金融设计系统配色方案
+// 设计理念: 现代科技 × 专业金融
+
+// 🎨 主题色彩系统
+// --------------------------------------------------
+
+// 主色调 - 科技蓝紫渐变系
+$primary: #667eea; // 主要操作色，科技蓝
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$primary-dark: #4c63d2; // 深色变体
+$primary-light: #8da4ff; // 浅色变体
+
+// 辅助色系
+$secondary: #764ba2; // 紫色辅助，与主色形成渐变
+$accent: #ff6b6b; // 强调色，温暖珊瑚色
+
+// 💰 金融专业配色
+// --------------------------------------------------
+$positive: #00d4aa; // 盈利绿，更现代的绿色
+$negative: #ff6b6b; // 亏损红，柔和但醒目的红色
+$info: #74c0fc; // 信息蓝，清新明亮
+$warning: #ffd43b; // 警告黄，醒目但不刺眼
+
+// 🌙 深色模式配色
+// --------------------------------------------------
+$dark: #0a0e1a; // 深空蓝背景
+$dark-page: #1a1d2e; // 深色页面背景
+$dark-surface: #252946; // 深色表面
+$dark-border: #363a5d; // 深色边框
+
+// 🎨 常用透明度颜色变量 (消除重复的rgba定义)
+// --------------------------------------------------
+
+// 主色调透明度变体
+$primary-alpha-03: rgb(102 126 234 / 3%);
+$primary-alpha-05: rgb(102 126 234 / 5%);
+$primary-alpha-10: rgb(102 126 234 / 10%);
+$primary-alpha-15: rgb(102 126 234 / 15%);
+$primary-alpha-20: rgb(102 126 234 / 20%);
+$primary-alpha-30: rgb(102 126 234 / 30%);
+
+// 白色透明度变体
+$white-alpha-02: rgb(255 255 255 / 2%);
+$white-alpha-03: rgb(255 255 255 / 3%);
+$white-alpha-05: rgb(255 255 255 / 5%);
+$white-alpha-08: rgb(255 255 255 / 8%);
+$white-alpha-10: rgb(255 255 255 / 10%);
+$white-alpha-15: rgb(255 255 255 / 15%);
+$white-alpha-20: rgb(255 255 255 / 20%);
+
+// 黑色透明度变体
+$black-alpha-02: rgb(0 0 0 / 2%);
+$black-alpha-03: rgb(0 0 0 / 3%);
+$black-alpha-05: rgb(0 0 0 / 5%);
+$black-alpha-08: rgb(0 0 0 / 8%);
+$black-alpha-10: rgb(0 0 0 / 10%);
+$black-alpha-15: rgb(0 0 0 / 15%);
+$black-alpha-20: rgb(0 0 0 / 20%);
+
+// 透明度设计Token
+$opacity-subtle: 0.4;
+$opacity-muted: 0.5;
+$opacity-disabled: 0.3;
+
+// 状态颜色透明度变体
+$success-alpha-10: rgb(0 212 170 / 10%);
+$success-alpha-12: rgb(46 125 50 / 12%);
+$warning-alpha-10: rgb(255 212 59 / 10%);
+$warning-alpha-20: rgb(255 212 59 / 20%);
+$danger-alpha-08: rgb(244 67 54 / 8%);
+$danger-alpha-10: rgb(244 67 54 / 10%);
+$danger-alpha-12: rgb(244 67 54 / 12%);
+$info-alpha-10: rgb(33 150 243 / 10%);
+$info-alpha-20: rgb(116 192 252 / 10%);
+
+// 💎 设计Token - 扩展颜色系统
+// --------------------------------------------------
+
+// 渐变色定义
+$gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$gradient-success: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+$gradient-danger: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+$gradient-info: linear-gradient(135deg, #74c0fc 0%, #339af0 100%);
+$gradient-warning: linear-gradient(135deg, #ffd43b 0%, #fcc419 100%);
+
+// 玻璃拟态效果
+$glass-bg: rgb(255 255 255 / 10%);
+$glass-bg-dark: rgb(255 255 255 / 5%);
+$glass-border: rgb(255 255 255 / 20%);
+$glass-backdrop: blur(10px);
+
+// 阴影系统
+$shadow-sm: 0 2px 4px rgb(0 0 0 / 5%);
+$shadow-md: 0 4px 12px rgb(0 0 0 / 10%);
+$shadow-lg: 0 8px 25px rgb(0 0 0 / 15%);
+$shadow-xl: 0 20px 40px rgb(0 0 0 / 20%);
+
+// 圆角系统
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 16px;
+$border-radius-xl: 20px;
+
+// 间距系统 (8px base unit)
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// 尺寸系统
+$menu-width-md: 200px;
+
+// 字体系统
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-hero: clamp(8rem, 20vw, 30vh);
+
+// 文本颜色
+$text-heading: rgb(255 255 255 / 88%);
+$text-body: rgb(255 255 255 / 78%);
+$text-muted: rgb(255 255 255 / 60%);
+$text-subtle: rgb(255 255 255 / 45%);
+
+// 动画曲线
+$ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+$ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+$ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+// 过渡时间
+$transition-fast: 0.15s;
+$transition-base: 0.2s;
+$transition-slow: 0.3s;
+
+// 📱 响应式混入 (消除重复的媒体查询)
+// --------------------------------------------------
+
+// 移动端单列布局
+@mixin mobile-single-column {
+  @media (width <= 768px) {
+    @content;
+  }
+}
+
+// 移动端垂直布局
+@mixin mobile-flex-column {
+  @media (width <= 768px) {
+    @content;
+  }
+}
+
+// 玻璃拟态面板
+@mixin glass-panel($background: $white-alpha-02, $border-color: $white-alpha-08, $radius: $border-radius-md) {
+  background: $background;
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  backdrop-filter: $glass-backdrop;
+}
+
+// 玻璃边框顶部分割
+@mixin glass-divider-top($color: $white-alpha-05) {
+  border-top: 1px solid $color;
+}
+
+// 状态色表面
+@mixin status-surface($color, $bg-alpha: 0.1, $border-alpha: 0.3) {
+  background: rgba($color, $bg-alpha);
+  border: 1px solid rgba($color, $border-alpha);
+}
+
+// 移动端紧凑间距
+@mixin mobile-compact-spacing {
+  @media (width <= 768px) {
+    @content;
+  }
+}
+
+// 平板端适配
+@mixin tablet-responsive {
+  @media (width <= 1024px) and (width >= 769px) {
+    @content;
+  }
+}
+
+// 桌面端完整功能
+@mixin desktop-full-features {
+  @media (width >= 1025px) {
+    @content;
+  }
+}

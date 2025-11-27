@@ -1,0 +1,621 @@
+// 🎨 现代化页面通用样式系统
+// --------------------------------------------------
+// 适用于所有管理页面的统一样式，消除重复代码
+
+@import 'quasar.variables';
+
+// 🎯 页面头部样式（核心结构）
+// --------------------------------------------------
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  position: relative;
+
+  .header-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, $primary-alpha-10 0%, rgb(118 75 162 / 10%) 100%);
+
+    .text-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .icon-glow {
+      position: absolute;
+      border-radius: 50%;
+      z-index: -1;
+
+      &:not(.icon-glow--pulse, .icon-glow--blur) {
+        inset: -4px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        opacity: 0.2;
+        filter: blur(8px);
+      }
+
+      &.icon-glow--pulse {
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(circle, rgb(102 126 234 / 30%) 0%, transparent 70%);
+        animation: glow-pulse 3s ease-in-out infinite;
+      }
+
+      &.icon-glow--config {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(circle, rgb(102 126 234 / 20%) 0%, transparent 70%);
+        animation: pulse 2s infinite;
+      }
+    }
+  }
+
+  .header-content {
+    flex: 1;
+
+    .header-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-subtitle {
+      font-size: 1.125rem;
+      color: var(--q-color-grey-6);
+      margin: 0;
+
+      .body--dark & {
+        color: var(--q-color-grey-4);
+      }
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .network-status {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+}
+
+// 🗂️ 交易日志卡片
+// --------------------------------------------------
+.trading-logs-card {
+  .card-header {
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgb(0 0 0 / 5%);
+
+    .body--dark & {
+      border-bottom-color: rgb(255 255 255 / 10%);
+    }
+
+    .header-icon {
+      background: $primary-alpha-10;
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .body--dark & {
+        background: $primary-alpha-20;
+      }
+    }
+  }
+
+  // 现代表格样式已统一到 app.scss
+}
+
+// ⚡ 快速操作卡片
+// --------------------------------------------------
+.quick-actions-card {
+  .action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+
+    @media (width <= 1200px) {
+      grid-template-columns: 1fr;
+    }
+
+    .action-btn {
+      min-height: 44px;
+      font-weight: 500;
+      transition: all $transition-base $ease-out-cubic;
+      position: relative;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+      }
+
+      &:active {
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+// 📊 系统状态卡片
+// --------------------------------------------------
+.system-status-card {
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background: $black-alpha-02;
+      border-radius: $border-radius-sm;
+      transition: all $transition-fast $ease-out-cubic;
+
+      .body--dark & {
+        background: $white-alpha-03;
+      }
+
+      &:hover {
+        background: $primary-alpha-05;
+        transform: translateX(2px);
+
+        .body--dark & {
+          background: $primary-alpha-10;
+        }
+      }
+
+      &.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .status-icon {
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: $white-alpha-10;
+        border-radius: 50%;
+
+        .body--dark & {
+          background: $white-alpha-05;
+        }
+      }
+
+      .status-content {
+        flex: 1;
+
+        .status-value {
+          margin-top: 4px;
+        }
+      }
+    }
+  }
+}
+
+// 盈利分析组件
+.profit-summary-card {
+  .profit-metric {
+    text-align: center;
+    padding: 8px;
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--q-color-grey-6);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    &.profit-positive .metric-value {
+      color: var(--q-positive);
+    }
+
+    &.profit-negative .metric-value {
+      color: var(--q-negative);
+    }
+  }
+}
+
+.compact-table .q-linear-progress {
+  height: 6px;
+}
+
+// ⚡ 性能指标卡片
+// --------------------------------------------------
+.performance-card {
+  .performance-metrics {
+    .metric-item {
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .metric-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: var(--q-color-grey-7);
+
+        .body--dark & {
+          color: var(--q-color-grey-4);
+        }
+      }
+
+      .metric-progress {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .q-linear-progress {
+          flex: 1;
+          border-radius: 4px;
+        }
+
+        .metric-value {
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: var(--q-color-grey-8);
+          min-width: 40px;
+          text-align: right;
+
+          .body--dark & {
+            color: var(--q-color-grey-3);
+          }
+        }
+      }
+    }
+  }
+}
+
+// 通用卡片头部样式已统一到 app.scss
+
+// 页面动画和加载状态已统一到 app.scss
+
+// 🌐 页面基础样式
+// --------------------------------------------------
+.modern-page {
+  padding: 16px !important;
+
+  // 日志页面特殊处理 - 允许横向滚动
+  &:has(.logs-card) {
+    overflow-x: auto !important;
+    min-width: 100% !important;
+  }
+}
+
+// 🔍 搜索和筛选卡片样式
+// --------------------------------------------------
+.search-card,
+.filter-card {
+  .card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--q-color-grey-8);
+
+    .body--dark & {
+      color: var(--q-color-grey-2);
+    }
+  }
+}
+
+// 🎛️ 搜索控件样式
+// --------------------------------------------------
+.search-controls {
+  .search-input-wrapper,
+  .filter-input-wrapper,
+  .action-button-wrapper {
+    .input-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--q-color-grey-7);
+      margin-bottom: 4px;
+      line-height: 1.2;
+
+      .body--dark & {
+        color: var(--q-color-grey-4);
+      }
+
+      &.invisible {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .search-input {
+    :deep(.q-field__control) {
+      height: 36px;
+      min-height: 36px;
+      padding: 0 6px;
+    }
+
+    :deep(.q-field__native) {
+      padding: 6px 0;
+      font-size: 0.875rem;
+    }
+  }
+
+  .filter-select {
+    :deep(.q-field__control) {
+      height: 36px;
+      min-height: 36px;
+      padding: 0 6px;
+    }
+
+    :deep(.q-field__native) {
+      padding: 6px 0;
+      font-size: 0.875rem;
+    }
+  }
+
+  .refresh-button {
+    height: 36px;
+  }
+}
+
+// 📱 响应式设计
+// --------------------------------------------------
+@media (width <= 768px) {
+  .page-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+
+    .header-content .header-title {
+      font-size: 1.875rem;
+    }
+
+    .header-content .header-subtitle {
+      font-size: 1rem;
+    }
+
+    .header-actions {
+      flex-direction: row;
+      gap: 8px;
+    }
+  }
+}
+
+// 发光动画定义
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+// 交易对单元格
+.symbol-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(102 126 234 / 10%);
+
+    .body--dark & {
+      background: rgb(102 126 234 / 20%);
+    }
+  }
+}
+
+// 交易模式选择器
+.trading-mode-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  .mode-toggle-container {
+    display: flex;
+    background: rgb(0 0 0 / 5%);
+    border-radius: 6px;
+    padding: 2px;
+    gap: 2px;
+    border: 1px solid rgb(102 126 234 / 30%);
+
+    .body--dark & {
+      background: rgb(255 255 255 / 5%);
+    }
+  }
+
+  .mode-btn {
+    flex: 1;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-radius: 4px;
+    border: none;
+    transition: all 0.2s ease;
+    min-height: 24px;
+    background: transparent;
+    color: var(--q-color-grey-6);
+
+    &.mode-btn-arbitrage.mode-btn--active {
+      background: var(--q-primary);
+      color: white;
+    }
+
+    &.mode-btn-scalping.mode-btn--active {
+      background: var(--q-warning);
+      color: white;
+    }
+  }
+}
+
+// 币种Logo通用样式
+.coin-logo {
+  border-radius: 50%;
+  object-fit: cover;
+
+  // 标准尺寸 (用于表格等)
+  &:not(.coin-logo--sm, .coin-logo--xs) {
+    width: 20px;
+    height: 20px;
+  }
+
+  // 小尺寸变体
+  &.coin-logo--sm {
+    width: 16px;
+    height: 16px;
+  }
+
+  // 超小尺寸变体 (用于移动端)
+  &.coin-logo--xs {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// 表格滚动容器
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  // 下拉菜单优化
+  .q-btn-dropdown .q-list {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  
+}
+
+
+
+// 日志卡片特殊处理（已迁移到LogsPage组件内）
+
+// 加载动画
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// JSON查看器通用样式
+.json-viewer {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+
+  .body--dark & {
+    border-color: #444;
+  }
+
+  @media (width <= 768px) {
+    max-height: 250px;
+  }
+}
+
+// 紧凑表格样式
+.compact-table {
+  .q-table__top,
+  .q-table__bottom {
+    padding: 8px 12px;
+  }
+
+  .q-td,
+  .q-th {
+    padding: 4px 8px;
+    font-size: 0.875rem;
+  }
+
+  .q-chip {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    min-height: 20px;
+  }
+
+  .q-btn {
+    min-height: 24px;
+    padding: 2px 6px;
+  }
+
+}
+
+// 列排序项样式
+.column-item {
+  .q-item__section--side {
+    padding-left: 8px;
+  }
+
+  .q-btn {
+    opacity: 0.6;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.disabled {
+      opacity: 0.3;
+    }
+  }
+
+  // 移动端隐藏列排序按钮
+  @media (width <= 768px) {
+    .q-item__section--side {
+      display: none;
+    }
+  }
+}

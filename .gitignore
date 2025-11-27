@@ -1,0 +1,114 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 测试和覆盖率
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# 日志文件
+*.log
+data/logs/*.log
+
+# 数据库文件
+*.db
+*.db-shm
+*.db-wal
+data/*.db
+data/*.db-*
+data/backups/*.db
+data/backups/*.db-*
+
+# 环境配置
+.env
+.env.local
+.env.production
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 备份文件
+*.bak
+*.backup
+*.tmp
+
+# 私钥和敏感信息
+*.key
+*.pem
+api_keys.json
+secrets.json
+
+# 终端记录和会话文件
+typescript
+*.typescript
+*.term
+script
+
+# Yarn/NPM 相关
+web_admin/frontend/.yarn/install-state.gz
+web_admin/frontend/.yarn/cache/
+web_admin/frontend/node_modules/
+**/node_modules/
+*.lock
+yarn.lock
+package-lock.json
+
+# 前端构建产物（如果需要时单独管理）
+# web_admin/frontend/dist/
+
+# 开发工具缓存
+.mypy_cache/
+.ruff_cache/
+.eslintcache
+
+# 临时文件和系统文件
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# 服务器运行时文件
+*.pid
+*.sock
+gunicorn.pid
