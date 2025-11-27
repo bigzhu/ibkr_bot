@@ -51,6 +51,8 @@ class IBKRClient(EWrapper, EClient):
         self._summary_lock = threading.Lock()
         self._summary: dict[str, Any] = {}
         self._next_req_id = 1
+        self._order_id_lock = threading.Lock()
+        self._next_order_id: int | None = None
 
     # ===== EWrapper 回调 =====
     def accountSummary(self, reqId: int, account: str, tag: str, value: str, currency: str) -> None:
@@ -61,6 +63,8 @@ class IBKRClient(EWrapper, EClient):
 
     def nextValidId(self, orderId: int) -> None:  # - IBKR 回调命名
         self._connected_event.set()
+        with self._order_id_lock:
+            self._next_order_id = orderId
 
     def accountSummaryEnd(self, reqId: int) -> None:  # - IBKR 回调命名
         self._summary_event.set()
@@ -80,6 +84,10 @@ class IBKRClient(EWrapper, EClient):
 
         if not self._connected_event.wait(timeout=timeout):
             raise TimeoutError("IBKR 连接未完成握手(nextValidId) , 请检查 Gateway/TWS 状态")
+
+        with self._order_id_lock:
+            if self._next_order_id is None:
+                raise TimeoutError("未获得有效的下单起始ID(nextValidId)")
 
     def account_summary(self, timeout: float = 5.0) -> dict[str, Any]:
         """同步获取账户概要信息."""
@@ -106,6 +114,15 @@ class IBKRClient(EWrapper, EClient):
             if not self._summary:
                 raise ValueError("未能获取 IBKR 账户概要")
             return dict(self._summary)
+
+    def next_order_id(self) -> int:
+        """获取下一个可用的订单ID."""
+        with self._order_id_lock:
+            if self._next_order_id is None:
+                raise TimeoutError("尚未从 IBKR 获取有效的订单ID")
+            order_id = self._next_order_id
+            self._next_order_id += 1
+            return order_id
 
     def get_current_price(self, contract: Contract) -> Decimal:
         """占位: 获取当前价格, 需要补充行情订阅实现."""
