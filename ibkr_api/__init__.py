@@ -15,6 +15,7 @@ from .common import (
     reset_client_cache,
 )
 from .get_account import account_info
+from .get_positions import get_positions
 
 __all__ = [
     "IBKRClient",
@@ -23,6 +24,7 @@ __all__ = [
     "get_api_config",
     "get_configured_client",
     "get_configured_client_with_config",
+    "get_positions",
     "reset_client_cache",
     "print_json",
 ]

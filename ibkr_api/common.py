@@ -53,6 +53,8 @@ class IBKRClient(EWrapper, EClient):
         self._next_req_id = 1
         self._order_id_lock = threading.Lock()
         self._next_order_id: int | None = None
+        self._positions_event = threading.Event()
+        self._positions: list[dict[str, Any]] = []
 
     # ===== EWrapper 回调 =====
     def accountSummary(self, reqId: int, account: str, tag: str, value: str, currency: str) -> None:
@@ -68,6 +70,28 @@ class IBKRClient(EWrapper, EClient):
 
     def accountSummaryEnd(self, reqId: int) -> None:  # - IBKR 回调命名
         self._summary_event.set()
+
+    def position(
+        self,
+        account: str,
+        contract: Contract,
+        position: float,
+        avgCost: float,
+    ) -> None:  # - IBKR 回调命名
+        self._positions.append(
+            {
+                "account": account,
+                "symbol": contract.symbol,
+                "sec_type": contract.secType,
+                "currency": contract.currency,
+                "exchange": contract.exchange,
+                "position": position,
+                "avg_cost": avgCost,
+            }
+        )
+
+    def positionEnd(self) -> None:  # - IBKR 回调命名
+        self._positions_event.set()
 
     # ===== 业务方法 =====
     def connect_and_start(self, timeout: float = 5.0) -> None:
@@ -114,6 +138,22 @@ class IBKRClient(EWrapper, EClient):
             if not self._summary:
                 raise ValueError("未能获取 IBKR 账户概要")
             return dict(self._summary)
+
+    def positions(self, timeout: float = 5.0) -> list[dict[str, Any]]:
+        """同步获取持仓列表."""
+        if not self.isConnected():
+            self.connect_and_start()
+
+        self._positions.clear()
+        self._positions_event.clear()
+
+        self.reqPositions()
+        if not self._positions_event.wait(timeout=timeout):
+            self.cancelPositions()
+            raise TimeoutError("获取 IBKR 持仓超时")
+
+        self.cancelPositions()
+        return list(self._positions)
 
     def next_order_id(self) -> int:
         """获取下一个可用的订单ID."""
