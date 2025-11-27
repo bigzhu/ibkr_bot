@@ -20,6 +20,7 @@ if __name__ == "__main__" and __package__ is None:
 
 from ibapi.client import EClient
 from ibapi.contract import Contract
+from ibapi.execution import ExecutionFilter
 from ibapi.wrapper import EWrapper
 from loguru import logger
 
@@ -55,6 +56,10 @@ class IBKRClient(EWrapper, EClient):
         self._next_order_id: int | None = None
         self._positions_event = threading.Event()
         self._positions: list[dict[str, Any]] = []
+        self._open_orders_event = threading.Event()
+        self._open_orders: list[dict[str, Any]] = []
+        self._executions_event = threading.Event()
+        self._executions: dict[str, dict[str, Any]] = {}
 
     # ===== EWrapper 回调 =====
     def accountSummary(self, reqId: int, account: str, tag: str, value: str, currency: str) -> None:
@@ -92,6 +97,65 @@ class IBKRClient(EWrapper, EClient):
 
     def positionEnd(self) -> None:  # - IBKR 回调命名
         self._positions_event.set()
+
+    def openOrder(  # - IBKR 回调命名
+        self,
+        orderId: int,
+        contract: Contract,
+        order: Any,
+        orderState: Any,
+    ) -> None:
+        self._open_orders.append(
+            {
+                "order_id": orderId,
+                "symbol": contract.symbol,
+                "sec_type": contract.secType,
+                "currency": contract.currency,
+                "exchange": contract.exchange,
+                "action": getattr(order, "action", None),
+                "order_type": getattr(order, "orderType", None),
+                "total_quantity": getattr(order, "totalQuantity", None),
+                "lmt_price": getattr(order, "lmtPrice", None),
+                "aux_price": getattr(order, "auxPrice", None),
+                "status": getattr(orderState, "status", None),
+            }
+        )
+
+    def openOrderEnd(self) -> None:  # - IBKR 回调命名
+        self._open_orders_event.set()
+
+    def execDetails(  # - IBKR 回调命名
+        self,
+        reqId: int,
+        contract: Contract,
+        execution: Any,
+    ) -> None:
+        self._executions[execution.execId] = {
+            "exec_id": execution.execId,
+            "order_id": execution.orderId,
+            "symbol": contract.symbol,
+            "sec_type": contract.secType,
+            "currency": contract.currency,
+            "exchange": contract.exchange,
+            "side": execution.side,
+            "shares": execution.shares,
+            "price": execution.price,
+            "time": execution.time,
+            "acct": execution.acctNumber,
+            "perm_id": execution.permId,
+            "client_id": execution.clientId,
+            "commission": None,
+            "commission_currency": None,
+        }
+
+    def commissionReport(self, commissionReport: Any) -> None:  # - IBKR 回调命名
+        exec_id = getattr(commissionReport, "execId", None)
+        if exec_id and exec_id in self._executions:
+            self._executions[exec_id]["commission"] = commissionReport.commission
+            self._executions[exec_id]["commission_currency"] = commissionReport.currency
+
+    def execDetailsEnd(self, reqId: int) -> None:  # - IBKR 回调命名
+        self._executions_event.set()
 
     # ===== 业务方法 =====
     def connect_and_start(self, timeout: float = 5.0) -> None:
@@ -154,6 +218,42 @@ class IBKRClient(EWrapper, EClient):
 
         self.cancelPositions()
         return list(self._positions)
+
+    def open_orders(self, timeout: float = 5.0) -> list[dict[str, Any]]:
+        """同步获取未完成订单."""
+        if not self.isConnected():
+            self.connect_and_start()
+
+        self._open_orders.clear()
+        self._open_orders_event.clear()
+
+        self.reqOpenOrders()
+        if not self._open_orders_event.wait(timeout=timeout):
+            raise TimeoutError("获取 IBKR 未完成订单超时")
+
+        return list(self._open_orders)
+
+    def executions(self, timeout: float = 5.0) -> list[dict[str, Any]]:
+        """同步获取成交明细."""
+        if not self.isConnected():
+            self.connect_and_start()
+
+        self._executions.clear()
+        self._executions_event.clear()
+
+        req_id = self._next_req_id
+        self._next_req_id += 1
+
+        filter_obj = ExecutionFilter()
+        if self.config.account:
+            filter_obj.acctCode = self.config.account
+        filter_obj.clientId = self.config.client_id
+
+        self.reqExecutions(req_id, filter_obj)
+        if not self._executions_event.wait(timeout=timeout):
+            raise TimeoutError("获取 IBKR 成交明细超时")
+
+        return list(self._executions.values())
 
     def next_order_id(self) -> int:
         """获取下一个可用的订单ID."""
